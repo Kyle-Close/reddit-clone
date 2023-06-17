@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { increment, decrement } from './reducers/counter';
@@ -10,14 +11,17 @@ function App() {
 	return (
 		<div>
 			<h3>Count: {count}</h3>
-			<button
-				className='px-4 py-2 bg-teal-500 rounded w-1/6'
-				onClick={() => {
-					dispatch(increment());
-				}}
-			>
-				Add 1
-			</button>
+			<Link to={'/hello'}>
+				<button
+					className='px-4 py-2 bg-teal-500 rounded w-1/6'
+					onClick={() => {
+						dispatch(increment());
+					}}
+				>
+					Add 1
+				</button>
+			</Link>
+
 			<button
 				className='ml-4 px-4 py-2 bg-red-500 rounded w-1/6'
 				onClick={() => {
