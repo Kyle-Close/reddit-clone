@@ -1,6 +1,5 @@
 const initialState = {
-    direction: 'left',
-    coverage: 1 // 0 = 1/2, 1 = 1/3
+    direction: 'bottom',
 }
 
 export function setModalDirection(direction) {
@@ -10,12 +9,6 @@ export function setModalDirection(direction) {
 	};
 }
 
-export function setModalCoverage(percentage){
-    return {
-        type: 'SET_MODAL_COVERAGE',
-        payload: percentage
-    }
-}
 
 export default function modal(state = initialState, action) {
 	switch (action.type) {
@@ -24,11 +17,6 @@ export default function modal(state = initialState, action) {
                 ...state,
                 direction: action.payload
             }
-            case 'SET_MODAL_DIRECTION':
-                return {
-                    ...state,
-                    coverage: action.payload
-                }
 		default:
 			return state;
 	}
