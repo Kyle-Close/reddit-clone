@@ -5,11 +5,21 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { increment, decrement } from './reducers/counter';
 import { auth } from './firebase';
-import { createNewUser, signInUser, logout } from './auth';
+import { monitorAuthState, createNewUser, signInUser, logout } from './auth';
 
 function App() {
 	const count = useSelector((state) => state.counter);
 	const dispatch = useDispatch();
+
+	function callback(user){
+		console.log(count)
+	}
+
+	React.useEffect(() => {
+		monitorAuthState(auth, callback)
+	},[])
+
+
 
 	return (
 		<div>
