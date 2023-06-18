@@ -3,46 +3,50 @@ import { Link } from 'react-router-dom';
 
 
 import { useSelector, useDispatch } from 'react-redux';
-import { increment, decrement } from './reducers/counter';
+import { setUserId } from './reducers/authState';
 import { auth } from './firebase';
 import { monitorAuthState, createNewUser, signInUser, logout } from './auth';
 
 function App() {
-	const count = useSelector((state) => state.counter);
+	const authState = useSelector(state => state.authState);
 	const dispatch = useDispatch();
 
 	function callback(user){
-		console.log(count)
+		if(user) dispatch(setUserId(user.uid))
+		else dispatch(setUserId(null))
 	}
 
 	React.useEffect(() => {
 		monitorAuthState(auth, callback)
-	},[])
+	}, [])
+
+	React.useEffect(() => {
+		let id;
+		if(authState && authState.userId) id = authState.userId;
+		id ? console.log(id) : console.log('No user currently signed in.')
+	},[authState])
 
 
 
 	return (
 		<div>
-			<h3>Count: {count}</h3>
 				<button
 					className='px-4 py-2 bg-teal-500 rounded w-1/6'
 					onClick={() => {
-						dispatch(increment());
-						signInUser(auth, "close@gmail.com", "Hello1234")
+						signInUser(auth, "close@gmail.com", "Hello12345")
 					}}
 				>
-					Add 1
+					Sign in
 				</button>
 
 
 			<button
 				className='ml-4 px-4 py-2 bg-red-500 rounded w-1/6'
 				onClick={() => {
-					dispatch(decrement());
-					createNewUser(auth, 'close@gmail.com', "Hello1234")
+					createNewUser(auth, 'close1@gmail.com', "Hello1234")
 				}}
 			>
-				Subtract 1
+				Create New User
 			</button>
 			<button
 				className='ml-4 px-4 py-2 bg-red-500 rounded w-1/6'

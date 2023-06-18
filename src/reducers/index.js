@@ -1,10 +1,10 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
-import todos from './todos';
 import counter from './counter';
+import authState from './authState';
 
 const rootReducer = combineReducers({
-	todos,
+	authState,
 	counter,
 });
 
