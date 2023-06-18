@@ -11,12 +11,15 @@ function App() {
 	const authState = useSelector(state => state.authState);
 	const dispatch = useDispatch();
 
-	function callback(user){
+
+
+	React.useEffect(() => {
+	// Set user ID in state. Use this for grabbing data later
+	const callback = (user) => {
 		if(user) dispatch(setUserId(user.uid))
 		else dispatch(setUserId(null))
 	}
-
-	React.useEffect(() => {
+		// Initialize authentication state monitoring
 		monitorAuthState(auth, callback)
 	}, [])
 
@@ -33,7 +36,7 @@ function App() {
 				<button
 					className='px-4 py-2 bg-teal-500 rounded w-1/6'
 					onClick={() => {
-						signInUser(auth, "close@gmail.com", "Hello12345")
+						signInUser(auth, "close1@gmail.com", "Hello1234")
 					}}
 				>
 					Sign in
@@ -56,6 +59,7 @@ function App() {
 			>
 				Logout
 			</button>
+			{authState.userId && <div>{`Currently signed in as ID: ${authState.userId}`}</div>}
 		</div>
 	);
 }
