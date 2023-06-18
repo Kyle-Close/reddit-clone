@@ -1,24 +1,49 @@
-import React from "react";
+import React from 'react';
+import snoo from '../img/snoo.png';
 
-function PopoutModal({modal}){
-    const {direction} = modal;
+function PopoutModal({ modal }) {
+	const { direction } = modal;
+	const classNames = getModalClassNames(direction).join(' ');
 
-    let result = "flex bg-zinc-800 absolute";
-    if(direction === 'left' || direction === 'right'){
-        result += ' w-2/3 inset-y-0'
-        if(direction === 'left'){
-            result += ' animate-slideInLeft left-0'
-        }
-        else if(direction === 'right'){
-            result += ' animate-slideInRight right-0'
-        }
-    } else {
-        // Direction bottom
-        result += ` animate-slideUp h-40 inset-x-0 bottom-0`
-    }
-    
+	return (
+		<div className={classNames}>
+			<div className='mt-12 w-1/2 aspect-auto self-center'>
+				<img
+					className='object-cover'
+					src={snoo}
+				/>
+			</div>
+		</div>
+	);
+}
 
-    return (<div className={result}></div>);
+function getModalClassNames(direction) {
+	const classNames = ['flex', 'flex-col', 'bg-zinc-800', 'absolute'];
+
+	if (direction === 'left' || direction === 'right') {
+		classNames.push('w-2/3');
+		classNames.push('inset-y-0');
+	}
+
+	switch (direction) {
+		case 'left':
+			classNames.push('animate-slideInLeft');
+			classNames.push('left-0');
+			break;
+		case 'right':
+			classNames.push('animate-slideInRight');
+			classNames.push('right-0');
+			break;
+		case 'bottom':
+			classNames.push('animate-slideUp');
+			classNames.push('h-40');
+			classNames.push('inset-x-0');
+			classNames.push('bottom-0');
+			break;
+	}
+
+	console.log(classNames);
+	return classNames;
 }
 
 export default PopoutModal;
