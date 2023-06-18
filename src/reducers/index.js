@@ -1,11 +1,11 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
-import counter from './counter';
 import authState from './authState';
+import modal from './modal';
 
 const rootReducer = combineReducers({
 	authState,
-	counter,
+	modal,
 });
 
 export default configureStore({ reducer: rootReducer });
