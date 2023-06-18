@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Header from './components/Header';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setUserId } from './reducers/authState';
@@ -30,7 +31,8 @@ function App() {
 
 	return (
 		<div>
-			<ProfileModal direction='right' />
+			<Header />
+			{/* <ProfileModal direction='right' /> */}
 			<button
 				className='px-4 py-2 bg-teal-500 rounded w-1/6'
 				onClick={() => {
