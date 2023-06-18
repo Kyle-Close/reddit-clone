@@ -1,20 +1,10 @@
 import React from 'react';
-import snoo from '../img/snoo.png';
 
-function PopoutModal({ modal }) {
+function PopoutModal({ children, modal }) {
 	const { direction } = modal;
 	const classNames = getModalClassNames(direction).join(' ');
 
-	return (
-		<div className={classNames}>
-			<div className='mt-12 w-1/2 aspect-auto self-center'>
-				<img
-					className='object-cover'
-					src={snoo}
-				/>
-			</div>
-		</div>
-	);
+	return <div className={classNames}>{children}</div>;
 }
 
 function getModalClassNames(direction) {
