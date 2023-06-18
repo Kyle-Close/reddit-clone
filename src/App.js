@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Header from './components/Header';
+import Header from './components/header/Header';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setUserId } from './reducers/authState';
@@ -8,6 +7,8 @@ import { auth } from './firebase';
 import { monitorAuthState, createNewUser, signInUser, logout } from './auth';
 
 import ProfileModal from './components/ProfileModal';
+import BackButton from './components/header/BackButton';
+import profileIcon from './img/Profile-Icon.png'
 
 function App() {
 	const authState = useSelector((state) => state.authState);
@@ -31,7 +32,12 @@ function App() {
 
 	return (
 		<div>
-			<Header />
+			<Header>
+				<BackButton />
+				<div className="h-3/4 aspect-auto">
+					<img src={profileIcon}/>
+				</div>
+			</Header>
 			{/* <ProfileModal direction='right' /> */}
 			<button
 				className='px-4 py-2 bg-teal-500 rounded w-1/6'
