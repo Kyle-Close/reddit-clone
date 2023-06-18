@@ -3,7 +3,7 @@ import React from "react";
 function PopoutModal({modal}){
     const {direction} = modal;
 
-    let result = "flex bg-green-800 absolute";
+    let result = "flex bg-zinc-800 absolute";
     if(direction === 'left' || direction === 'right'){
         result += ' w-2/3 inset-y-0'
         if(direction === 'left'){
@@ -18,7 +18,7 @@ function PopoutModal({modal}){
     }
     
 
-    return (<div className={result}>Modal</div>);
+    return (<div className={result}></div>);
 }
 
 export default PopoutModal;

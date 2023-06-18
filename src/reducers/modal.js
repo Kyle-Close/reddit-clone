@@ -1,5 +1,5 @@
 const initialState = {
-    direction: 'bottom',
+    direction: 'right',
 }
 
 export function setModalDirection(direction) {
