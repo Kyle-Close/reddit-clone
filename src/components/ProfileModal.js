@@ -23,11 +23,17 @@ function ProfileModal({ direction, isOpen }) {
 		// Not logged in
 		if (authState && authState.userId !== null) {
 			return (
-				<div className='mt-12 w-1/2 aspect-auto self-center'>
-					<img
-						className='object-cover'
-						src={snoo}
-					/>
+				<div className='flex flex-col items-center w-full h-full'>
+					<div className='mt-12 w-1/2 aspect-auto flex justify-center'>
+						<img
+							className='object-cover'
+							src={snoo}
+						/>
+					</div>
+					<p className='mt-8 w-full text-gray-300 text-sm text-center'>Looks like you're not signed in</p>
+					<button className='mt-6 bg-blue-500 text-gray-300 w-2/3 h-12 rounded-full'>Sign in</button>
+					<p className='mt-10 text-gray-300 text-xs'>Don't have an account?</p>
+					<button className='mt-4 bg-orange-600 text-gray-300 w-2/3 h-8 rounded-full'>Sign up</button>
 				</div>
 			);
 		} else {
