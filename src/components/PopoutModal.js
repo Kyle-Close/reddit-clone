@@ -32,7 +32,6 @@ function getModalClassNames(direction) {
 			break;
 	}
 
-	console.log(classNames);
 	return classNames;
 }
 

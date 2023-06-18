@@ -43,7 +43,8 @@ function App() {
 			<button
 				className='ml-4 px-4 py-2 bg-red-500 rounded w-1/6'
 				onClick={() => {
-					createNewUser(auth, 'close1@gmail.com', 'Hello1234');
+					//createNewUser(auth, 'close1@gmail.com', 'Hello1234');
+					logout(auth);
 				}}
 			>
 				Create New User
