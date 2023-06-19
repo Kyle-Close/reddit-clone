@@ -14,20 +14,27 @@ function Signup() {
 					<div className='grid gap-2'>
 						<label>Username</label>
 						<input
-							className='bg-zinc-400 h-12 rounded-md px-2 text-white placeholder-gray-100'
+							className='bg-zinc-400 h-12 rounded-md px-3 text-white placeholder-gray-100'
 							placeholder='username'
+							required
 						/>
 					</div>
 					<div className='grid gap-2'>
 						<label>Email</label>
 						<input
-							className='bg-zinc-400 h-12 rounded-md px-2 text-white placeholder-gray-100'
+							className='bg-zinc-400 h-12 rounded-md px-3 text-white placeholder-gray-100'
 							placeholder='example@gmail.com'
+							type='email'
+							required
 						/>
 					</div>
 					<div className='grid gap-2'>
 						<label>Password</label>
-						<input className='bg-zinc-400 h-12 rounded-md px-2 text-white placeholder-gray-100' />
+						<input
+							className='bg-zinc-400 h-12 rounded-md px-3 text-white placeholder-gray-100'
+							type='password'
+							required
+						/>
 					</div>
 					<button className='w-1/2 mt-6 bg-orange-700 py-3 rounded-full justify-self-center'>
 						Sign up
