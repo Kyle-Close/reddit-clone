@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import PopoutModal from '../components/PopoutModal';
 import snoo from '../img/snoo.png';
@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setModalDirection } from '../reducers/modal';
 
 function ProfileModal({ direction }) {
+	const navigate = useNavigate();
 	const modal = useSelector((state) => state.modal);
 	const authState = useSelector((state) => state.authState);
 	const dispatch = useDispatch();
@@ -37,12 +38,12 @@ function ProfileModal({ direction }) {
 						Sign in
 					</button>
 					<p className='mt-10 text-gray-300 text-xs'>Don't have an account?</p>
-					<Link
-						to='/signup'
-						className='text-xs mt-4 bg-orange-600 text-gray-300 w-2/3 h-8 rounded-full'
+					<button
+						onClick={() => navigate('/signup')}
+						className='text-center text-xs mt-4 bg-orange-600 text-gray-300 w-2/3 h-8 rounded-full'
 					>
 						Sign up
-					</Link>
+					</button>
 				</div>
 			);
 		} else {
