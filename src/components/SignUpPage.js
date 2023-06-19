@@ -6,7 +6,7 @@ import { auth } from '../firebase';
 import Header from './header/Header';
 import BackButton from './header/BackButton';
 
-function Signup() {
+function SignUpPage() {
 	const navigate = useNavigate();
 	const [signupFormData, setSignupFormData] = React.useState({
 		userName: '',
@@ -122,4 +122,4 @@ function getReadableErrorMessage(errorMessage) {
 	return result;
 }
 
-export default Signup;
+export default SignUpPage;

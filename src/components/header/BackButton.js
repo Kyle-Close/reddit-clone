@@ -1,12 +1,17 @@
-import React from "react";
-import backIcon from '../../img/Back Icon.png'
+import React from 'react';
+import backIcon from '../../img/Back Icon.png';
+import { useNavigate } from 'react-router';
 
-function BackButton(){
-    return (
-        <button>
-            <img src={backIcon}/>
-        </button>
-    )
+function BackButton() {
+	const navigate = useNavigate();
+	function handleClick() {
+		navigate(-1);
+	}
+	return (
+		<button onClick={handleClick}>
+			<img src={backIcon} />
+		</button>
+	);
 }
 
-export default BackButton
+export default BackButton;
