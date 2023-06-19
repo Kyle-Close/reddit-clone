@@ -3,16 +3,20 @@ import Header from './components/header/Header';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setUserId } from './reducers/authState';
+import { setIsOpen } from './reducers/modal';
 import { auth } from './firebase';
 import { monitorAuthState, createNewUser, signInUser, logout } from './auth';
 
 import ProfileModal from './components/ProfileModal';
 import BackButton from './components/header/BackButton';
-import profileIcon from './img/Profile-Icon.png'
+import profileIcon from './img/Profile-Icon.png';
 
 function App() {
 	const authState = useSelector((state) => state.authState);
+	const modal = useSelector((state) => state.modal);
 	const dispatch = useDispatch();
+
+	console.log(modal);
 
 	React.useEffect(() => {
 		// Set user ID in state. Use this for grabbing data later
@@ -24,22 +28,28 @@ function App() {
 		monitorAuthState(auth, callback);
 	}, []);
 
-	React.useEffect(() => {
+	/* 	React.useEffect(() => {
 		let id;
 		if (authState && authState.userId) id = authState.userId;
 		id ? console.log(id) : console.log('No user currently signed in.');
-	}, [authState]);
+	}, [authState]); */
 
 	return (
 		<div>
 			<Header>
 				<BackButton />
-				<div className="h-3/4 aspect-auto">
-					<img src={profileIcon}/>
-				</div>
+				<button
+					onClick={(e) => {
+						e.stopPropagation();
+						dispatch(setIsOpen(true));
+					}}
+					className='h-3/4 aspect-auto'
+				>
+					<img src={profileIcon} />
+				</button>
 			</Header>
-			{/* <ProfileModal direction='right' /> */}
-			<button
+			{modal.isOpen && <ProfileModal direction='left' />}
+			{/* 			<button
 				className='px-4 py-2 bg-teal-500 rounded w-1/6'
 				onClick={() => {
 					signInUser(auth, 'close1@gmail.com', 'Hello1234');
@@ -67,7 +77,7 @@ function App() {
 			</button>
 			{authState && (
 				<div>{`Currently signed in as ID: ${authState.userId}`}</div>
-			)}
+			)} */}
 		</div>
 	);
 }

@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setModalDirection } from '../reducers/modal';
 import { auth } from '../firebase';
 
-function ProfileModal({ direction, isOpen }) {
+function ProfileModal({ direction }) {
 	const modal = useSelector((state) => state.modal);
 	const authState = useSelector((state) => state.authState);
 	const dispatch = useDispatch();
@@ -15,7 +15,6 @@ function ProfileModal({ direction, isOpen }) {
 		// Set the modal direction and isOpen property
 		// There is only 1 modal state. We change it's direction
 		// Based on what modal we want to display
-		console.log('Dispatching...');
 		dispatch(setModalDirection(direction));
 	}, [direction, authState]);
 
@@ -30,14 +29,20 @@ function ProfileModal({ direction, isOpen }) {
 							src={snoo}
 						/>
 					</div>
-					<p className='mt-8 w-full text-gray-300 text-sm text-center'>Looks like you're not signed in</p>
-					<button className='mt-6 bg-blue-500 text-gray-300 w-2/3 h-12 rounded-full'>Sign in</button>
+					<p className='mt-8 w-full text-gray-300 text-sm text-center'>
+						Looks like you're not signed in
+					</p>
+					<button className='mt-6 bg-blue-500 text-gray-300 w-2/3 h-12 rounded-full'>
+						Sign in
+					</button>
 					<p className='mt-10 text-gray-300 text-xs'>Don't have an account?</p>
-					<button className='mt-4 bg-orange-600 text-gray-300 w-2/3 h-8 rounded-full'>Sign up</button>
+					<button className='text-xs mt-4 bg-orange-600 text-gray-300 w-2/3 h-8 rounded-full'>
+						Sign up
+					</button>
 				</div>
 			);
 		} else {
-			console.log('User is logged in');
+			/* console.log('User is logged in'); */
 		}
 	};
 
@@ -47,7 +52,7 @@ function ProfileModal({ direction, isOpen }) {
 		[authState]
 	);
 
-	console.log('Latest modal content', modalContent);
+	/* console.log('Latest modal content', modalContent); */
 
 	return <PopoutModal modal={modal}>{modalContent}</PopoutModal>;
 }

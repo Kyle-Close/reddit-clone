@@ -1,10 +1,43 @@
 import React from 'react';
+import { useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { setIsOpen } from '../reducers/modal';
 
 function PopoutModal({ children, modal }) {
 	const { direction } = modal;
+	const myModal = useRef(null);
 	const classNames = getModalClassNames(direction).join(' ');
+	const isOpen = useSelector((state) => state.modal.isOpen);
+	const dispatch = useDispatch();
 
-	return <div className={classNames}>{children}</div>;
+	function onClickOutside(event) {
+		if (isOpen && myModal.current && !myModal.current.contains(event.target)) {
+			console.log('You clicked outside of the div!');
+			dispatch(setIsOpen(false));
+		}
+	}
+
+	useEffect(() => {
+		console.log('Mounting');
+		// Attach the listeners on component mount
+		document.addEventListener('click', onClickOutside);
+
+		// Detach the listeners on component unmount
+		return () => {
+			console.log('Unmounting');
+			document.removeEventListener('click', onClickOutside);
+		};
+	}, [isOpen]);
+
+	return (
+		<div
+			ref={myModal}
+			className={classNames}
+		>
+			{children}
+		</div>
+	);
 }
 
 function getModalClassNames(direction) {
