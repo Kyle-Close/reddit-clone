@@ -8,9 +8,10 @@ module.exports = {
 	],
 	theme: {
 		extend: {
+			placeholderColor: ['responsive', 'dark', 'focus', 'hover', 'active'],
 			fontSize: {
 				sm: '0.85rem',
-			  },
+			},
 			animation: {
 				slideInLeft: 'slideInLeft 0.5s ease-in-out',
 				slideInRight: 'slideInRight 0.5s ease-in-out',

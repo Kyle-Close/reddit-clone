@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
 import PopoutModal from '../components/PopoutModal';
 import snoo from '../img/snoo.png';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setModalDirection } from '../reducers/modal';
-import { auth } from '../firebase';
 
 function ProfileModal({ direction }) {
 	const modal = useSelector((state) => state.modal);
@@ -36,9 +37,12 @@ function ProfileModal({ direction }) {
 						Sign in
 					</button>
 					<p className='mt-10 text-gray-300 text-xs'>Don't have an account?</p>
-					<button className='text-xs mt-4 bg-orange-600 text-gray-300 w-2/3 h-8 rounded-full'>
+					<Link
+						to='/signup'
+						className='text-xs mt-4 bg-orange-600 text-gray-300 w-2/3 h-8 rounded-full'
+					>
 						Sign up
-					</button>
+					</Link>
 				</div>
 			);
 		} else {

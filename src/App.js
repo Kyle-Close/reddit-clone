@@ -3,13 +3,12 @@ import Header from './components/header/Header';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setUserId } from './reducers/authState';
-import { setIsOpen } from './reducers/modal';
 import { auth } from './firebase';
 import { monitorAuthState, createNewUser, signInUser, logout } from './auth';
 
 import ProfileModal from './components/ProfileModal';
 import BackButton from './components/header/BackButton';
-import profileIcon from './img/Profile-Icon.png';
+import ProfileIcon from './components/ProfileIcon';
 
 function App() {
 	const authState = useSelector((state) => state.authState);
@@ -38,17 +37,9 @@ function App() {
 		<div>
 			<Header>
 				<BackButton />
-				<button
-					onClick={(e) => {
-						e.stopPropagation();
-						dispatch(setIsOpen(true));
-					}}
-					className='h-3/4 aspect-auto'
-				>
-					<img src={profileIcon} />
-				</button>
+				<ProfileIcon />
 			</Header>
-			{modal.isOpen && <ProfileModal direction='left' />}
+			{modal.isOpen && <ProfileModal direction='right' />}
 			{/* 			<button
 				className='px-4 py-2 bg-teal-500 rounded w-1/6'
 				onClick={() => {
