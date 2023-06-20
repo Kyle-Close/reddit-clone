@@ -12,6 +12,7 @@ function SignInPage() {
 		email: '',
 		password: '',
 	});
+	const [signInErrorMessage, setSignInErrorMessage] = React.useState(null);
 
 	function handleFormChange(e) {
 		const inputType = e.target.type;
@@ -36,14 +37,16 @@ function SignInPage() {
 
 	async function handleSubmit(e) {
 		e.preventDefault();
-		const user = await signInUser(
+		const isSuccess = await signInUser(
 			auth,
 			signInFormData.email,
 			signInFormData.password
 		);
-		if (user !== true) {
-			console.log('Success');
+		if (isSuccess) {
+			navigate('/');
 		} else {
+			// Unsucessful login
+			setSignInErrorMessage('Invalid email/password.');
 		}
 	}
 
@@ -80,6 +83,9 @@ function SignInPage() {
 							required
 						/>
 					</div>
+					{signInErrorMessage && (
+						<p className='text-red-400'>{signInErrorMessage}</p>
+					)}
 					<button className='w-1/2 mt-6 bg-teal-700 py-3 rounded-full justify-self-center text-center'>
 						Sign in
 					</button>

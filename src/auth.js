@@ -32,10 +32,12 @@ export async function signInUser(auth, email, password) {
 			password
 		);
 		const user = userCredential.user;
+		return true;
 	} catch (error) {
 		const errorCode = error.code;
 		const errorMessage = error.message;
 		console.log(errorMessage);
+		return false;
 	}
 }
 
