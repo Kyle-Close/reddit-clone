@@ -116,6 +116,8 @@ function SignUpPage() {
 function getReadableErrorMessage(errorMessage) {
 	if (errorMessage.includes('email-already-in-use')) {
 		return 'An account with this email already exists';
+	} else if (errorMessage.includes('Username already exists')) {
+		return 'An account with this username already exists';
 	}
 	let result;
 	// Remove "Firebase:" and (<Error-Code>)

@@ -10,6 +10,7 @@ import {
 	where,
 	collection,
 } from 'firebase/firestore';
+import { async } from 'q';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -49,4 +50,21 @@ export async function getUserById(id) {
 		// User not found with ID
 		return null;
 	}
+}
+
+export async function doesUserNameExist(userName) {
+	const userNameQuery = query(
+		collection(db, 'users'),
+		where('userName', '==', userName)
+	);
+	const querySnapshot = await getDocs(userNameQuery);
+	if (querySnapshot.size > 0) {
+		return true;
+	} else {
+		// User not found with ID
+		return false;
+	}
+	console.log('here', querySnapshot.docs[0]);
+	if (querySnapshot.docs[0] > 0) return true;
+	else return false;
 }
