@@ -12,6 +12,7 @@ import { setModalDirection } from '../reducers/modal';
 
 import { logout } from '../auth';
 import { auth } from '../firebase';
+import { getUserById } from '../firebase';
 
 function ProfileModal({ direction }) {
 	const navigate = useNavigate();
@@ -28,7 +29,10 @@ function ProfileModal({ direction }) {
 		dispatch(setModalDirection(direction));
 	}, [direction, authState]);
 
-	useEffect(() => {}, [authState]);
+	useEffect(() => {
+		//console.log(authState.userId)
+		getUserById(authState.userId)
+	}, [authState]);
 
 	function getProfileModalContents() {
 		// Logged in

@@ -1,8 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, query, getDocs, where, collection } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -32,4 +31,13 @@ export async function addNewUser(userId, userName, createdAt) {
 	});
 }
 
-//1687242554211
+export async function getUserById(id){
+	console.log(id)
+	const userQuery = query(collection(db, "users"), where("userId", "==", id));
+	const querySnapshot = await getDocs(userQuery);
+	//console.log('Snapshot: ', querySnapshot)
+	querySnapshot.forEach((doc) => {
+		// doc.data() is never undefined for query doc snapshots
+		console.log(doc.id, " => ", doc.data());
+	  });
+}
