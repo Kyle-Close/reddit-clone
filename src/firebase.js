@@ -23,11 +23,13 @@ export const auth = getAuth(app);
 export default app;
 
 // UTILITY FUNCTIONS
-export async function addNewUser(userId, userName) {
+export async function addNewUser(userId, userName, createdAt) {
 	await setDoc(doc(db, 'users', userName), {
 		userId: userId,
 		userName: userName,
 		karma: '0',
-		joinDate: 'not implemented',
+		createdAt: createdAt,
 	});
 }
+
+//1687242554211

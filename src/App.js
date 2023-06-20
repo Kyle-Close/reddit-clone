@@ -4,14 +4,13 @@ import Header from './components/header/Header';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUserId } from './reducers/authState';
 import { auth } from './firebase';
-import { monitorAuthState, createNewUser, signInUser, logout } from './auth';
+import { monitorAuthState } from './auth';
 
 import ProfileModal from './components/ProfileModal';
 import BackButton from './components/header/BackButton';
 import ProfileIcon from './components/ProfileIcon';
 
 function App() {
-	const authState = useSelector((state) => state.authState);
 	const modal = useSelector((state) => state.modal);
 	const dispatch = useDispatch();
 
@@ -25,12 +24,6 @@ function App() {
 		monitorAuthState(auth, callback);
 	}, []);
 
-	/* 	React.useEffect(() => {
-		let id;
-		if (authState && authState.userId) id = authState.userId;
-		id ? 
-	}, [authState]); */
-
 	return (
 		<div>
 			<Header>
@@ -38,35 +31,6 @@ function App() {
 				<ProfileIcon />
 			</Header>
 			{modal.isOpen && <ProfileModal direction='right' />}
-			{/* 			<button
-				className='px-4 py-2 bg-teal-500 rounded w-1/6'
-				onClick={() => {
-					signInUser(auth, 'close1@gmail.com', 'Hello1234');
-				}}
-			>
-				Sign in
-			</button>
-
-			<button
-				className='ml-4 px-4 py-2 bg-red-500 rounded w-1/6'
-				onClick={() => {
-					//createNewUser(auth, 'close1@gmail.com', 'Hello1234');
-					logout(auth);
-				}}
-			>
-				Create New User
-			</button>
-			<button
-				className='ml-4 px-4 py-2 bg-red-500 rounded w-1/6'
-				onClick={() => {
-					logout(auth);
-				}}
-			>
-				Logout
-			</button>
-			{authState && (
-				<div>{`Currently signed in as ID: ${authState.userId}`}</div>
-			)} */}
 		</div>
 	);
 }
