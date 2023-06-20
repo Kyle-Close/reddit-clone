@@ -5,6 +5,7 @@ import PopoutModal from '../components/PopoutModal';
 import snooLoggedOut from '../img/snoo.png';
 import snooLoggedIn from '../img/snoo-logged-in.png';
 import karma from '../img/karma.svg';
+import cake from '../img/cake.svg';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setModalDirection } from '../reducers/modal';
@@ -23,12 +24,18 @@ function ProfileModal({ direction }) {
 		// Set the modal direction and isOpen property
 		// There is only 1 modal state. We change it's direction
 		// Based on what modal we want to display
+		console.log('authState changed.');
 		dispatch(setModalDirection(direction));
 	}, [direction, authState]);
 
-	const getProfileModalContents = () => {
+	useEffect(() => {
+		console.log('here', authState);
+	}, [authState]);
+
+	function getProfileModalContents() {
 		// Logged in
-		if (authState && authState.userId !== null) {
+		console.log('TESTING: ', authState);
+		if (authState.userId === null) {
 			return (
 				<div className='flex flex-col items-center w-full h-full'>
 					<div className='mt-12 w-1/2 aspect-auto flex justify-center'>
@@ -48,8 +55,7 @@ function ProfileModal({ direction }) {
 					</button>
 					<p className='mt-10 text-gray-300 text-xs'>Don't have an account?</p>
 					<button
-						//onClick={() => navigate('/signup')}
-						onClick={logout(auth)}
+						onClick={() => navigate('/signup')}
 						className='text-center text-xs mt-4 bg-orange-600 text-gray-300 w-2/3 h-8 rounded-full'
 					>
 						Sign up
@@ -64,22 +70,42 @@ function ProfileModal({ direction }) {
 						<img src={snooLoggedIn} />
 					</div>
 					<p className='mt-4 text-gray-200'>u/close55</p>
-					<div className='mt-8 flex w-full px-4 text-gray-200'>
-						<div className='grow flex gap-2'>
-							<div className='w-12 aspect-auto'>
+					<div className='mt-8 flex w-full px-4 text-gray-200 gap-8 justify-center'>
+						<div className='flex gap-4'>
+							<div className='w-10 aspect-auto'>
 								<img src={karma} />
 							</div>
 							<div className='grow'>
 								<h4>11</h4>
-								<p>Karma</p>
+								<p className='text-xs text-gray-300'>Karma</p>
 							</div>
 						</div>
-						<div className='grow'>Reddit Age</div>
+						<div className='flex gap-3'>
+							<div className='w-12 aspect-auto'>
+								<img src={cake} />
+							</div>
+							<div className='flex flex-col'>
+								<h4>5d</h4>
+								<p className='text-xs'>Reddit age</p>
+							</div>
+						</div>
+					</div>
+					<div className='pb-10 w-full grow flex items-end justify-center'>
+						<button
+							onClick={handleSignOut}
+							className='font-bold bg-red-600 py-2 px-4 rounded-full text-red-100 w-32'
+						>
+							Sign out
+						</button>
 					</div>
 				</div>
 			);
 		}
-	};
+	}
+
+	function handleSignOut() {
+		logout(auth);
+	}
 
 	// Display correct contents based on if user is logged in
 	React.useEffect(() => {

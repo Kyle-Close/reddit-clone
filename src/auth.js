@@ -46,5 +46,6 @@ export function monitorAuthState(auth, callbackFn) {
 }
 
 export async function logout(auth) {
+	console.log('logging out');
 	await signOut(auth);
 }
