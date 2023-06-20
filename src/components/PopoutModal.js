@@ -13,19 +13,16 @@ function PopoutModal({ children, modal }) {
 
 	function onClickOutside(event) {
 		if (isOpen && myModal.current && !myModal.current.contains(event.target)) {
-			console.log('You clicked outside of the div!');
 			dispatch(setIsOpen(false));
 		}
 	}
 
 	useEffect(() => {
-		console.log('Mounting');
 		// Attach the listeners on component mount
 		document.addEventListener('click', onClickOutside);
 
 		// Detach the listeners on component unmount
 		return () => {
-			console.log('Unmounting');
 			document.removeEventListener('click', onClickOutside);
 		};
 	}, [isOpen]);

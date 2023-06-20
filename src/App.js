@@ -15,8 +15,6 @@ function App() {
 	const modal = useSelector((state) => state.modal);
 	const dispatch = useDispatch();
 
-	console.log(modal);
-
 	React.useEffect(() => {
 		// Set user ID in state. Use this for grabbing data later
 		const callback = (user) => {
@@ -30,7 +28,7 @@ function App() {
 	/* 	React.useEffect(() => {
 		let id;
 		if (authState && authState.userId) id = authState.userId;
-		id ? console.log(id) : console.log('No user currently signed in.');
+		id ? 
 	}, [authState]); */
 
 	return (

@@ -5,7 +5,9 @@ import {
 	signOut,
 } from 'firebase/auth';
 
-export async function createNewUser(auth, email, password) {
+import { addNewUser } from './firebase';
+
+export async function createNewUser(auth, email, password, userName) {
 	try {
 		// TO DO
 		// 1. Check if user name exists in cloud user database
@@ -16,7 +18,9 @@ export async function createNewUser(auth, email, password) {
 		);
 		const user = userCredential.user;
 		// 2. Add user to user name database on cloud
-		console.log('User added to database');
+		const { uid } = user;
+		await addNewUser(uid, userName);
+
 		return true;
 	} catch (error) {
 		const errorMessage = error.message;
@@ -36,7 +40,7 @@ export async function signInUser(auth, email, password) {
 	} catch (error) {
 		const errorCode = error.code;
 		const errorMessage = error.message;
-		console.log(errorMessage);
+
 		return false;
 	}
 }
@@ -46,6 +50,5 @@ export function monitorAuthState(auth, callbackFn) {
 }
 
 export async function logout(auth) {
-	console.log('logging out');
 	await signOut(auth);
 }

@@ -25,7 +25,6 @@ function SignInPage() {
 				propertyToUpdate = 'password';
 				break;
 			default:
-				console.log(`Add input type ${inputType} to switch.`);
 		}
 		setSignInFormData((prevSignupFormData) => {
 			return {
@@ -50,9 +49,7 @@ function SignInPage() {
 		}
 	}
 
-	React.useEffect(() => {
-		console.log(signInFormData);
-	}, [signInFormData]);
+	React.useEffect(() => {}, [signInFormData]);
 
 	return (
 		<div className='flex flex-col h-screen bg-black'>

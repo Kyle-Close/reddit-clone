@@ -5,6 +5,7 @@ import { auth } from '../firebase';
 
 import Header from './header/Header';
 import BackButton from './header/BackButton';
+import { addNewUser } from '../firebase';
 
 function SignUpPage() {
 	const navigate = useNavigate();
@@ -30,7 +31,6 @@ function SignUpPage() {
 				propertyToUpdate = 'password';
 				break;
 			default:
-				console.log(`Add input type ${inputType} to switch.`);
 		}
 		setSignupFormData((prevSignupFormData) => {
 			return {
@@ -42,16 +42,21 @@ function SignUpPage() {
 
 	async function handleSubmit(e) {
 		e.preventDefault();
+		const { userName } = signupFormData;
+
 		const user = await createNewUser(
 			auth,
 			signupFormData.email,
-			signupFormData.password
+			signupFormData.password,
+			userName
 		);
+
 		if (user !== true) {
 			const errorMessage = getReadableErrorMessage(user);
 			// createNewUser will have returned the error message on why we were not able to create the account
 			setCreateUserErrorMessage(errorMessage);
 		} else {
+			// Add user to cloud firestore database 'users'
 			setCreateUserErrorMessage(null);
 			navigate('/');
 		}

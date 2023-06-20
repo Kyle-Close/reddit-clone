@@ -24,17 +24,15 @@ function ProfileModal({ direction }) {
 		// Set the modal direction and isOpen property
 		// There is only 1 modal state. We change it's direction
 		// Based on what modal we want to display
-		console.log('authState changed.');
+
 		dispatch(setModalDirection(direction));
 	}, [direction, authState]);
 
-	useEffect(() => {
-		console.log('here', authState);
-	}, [authState]);
+	useEffect(() => {}, [authState]);
 
 	function getProfileModalContents() {
 		// Logged in
-		console.log('TESTING: ', authState);
+
 		if (authState.userId === null) {
 			return (
 				<div className='flex flex-col items-center w-full h-full'>
@@ -63,7 +61,6 @@ function ProfileModal({ direction }) {
 				</div>
 			);
 		} else {
-			console.log('Logged in...');
 			return (
 				<div className='w-full h-full flex flex-col items-center'>
 					<div className='mt-8'>
@@ -109,12 +106,11 @@ function ProfileModal({ direction }) {
 
 	// Display correct contents based on if user is logged in
 	React.useEffect(() => {
-		console.log('Logged in');
 		const modalContent = getProfileModalContents();
 		setModalContent(modalContent);
 	}, [authState]);
 
-	/* console.log('Latest modal content', modalContent); */
+	/*  */
 
 	return (
 		<PopoutModal modal={modal}>{modalContent && modalContent}</PopoutModal>
