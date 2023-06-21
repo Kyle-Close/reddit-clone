@@ -1,6 +1,7 @@
 const initialState = {
-	direction: 'right',
+	direction: '',
 	isOpen: false,
+	type: '',
 };
 
 export function setModalDirection(direction) {
@@ -17,7 +18,15 @@ export function setIsOpen(value) {
 	};
 }
 
+export function setType(type) {
+	return {
+		type: 'SET_TYPE',
+		payload: type,
+	};
+}
+
 export default function modal(state = initialState, action) {
+	console.log('State: ', state);
 	switch (action.type) {
 		case 'SET_MODAL_DIRECTION':
 			return {
@@ -28,6 +37,11 @@ export default function modal(state = initialState, action) {
 			return {
 				...state,
 				isOpen: action.payload,
+			};
+		case 'SET_TYPE':
+			return {
+				...state,
+				type: action.payload,
 			};
 		default:
 			return state;

@@ -20,7 +20,6 @@ export async function createNewUser(auth, email, password, userName) {
 				password
 			);
 			const user = userCredential.user;
-			console.log(user);
 			const { createdAt } = user.metadata;
 			// 2. Add user to user name database on cloud
 			const { uid } = user;

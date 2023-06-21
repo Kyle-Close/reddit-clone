@@ -7,8 +7,9 @@ import { auth } from './firebase';
 import { monitorAuthState } from './auth';
 
 import ProfileModal from './components/profile-modal/ProfileModal';
-import BackButton from './components/header/BackButton';
+import MenuSelectButton from './components/header/MenuSelectButton';
 import ProfileIcon from './components/ProfileIcon';
+import MenuModal from './components/menu-modal/MenuModal';
 
 function App() {
 	const modal = useSelector((state) => state.modal);
@@ -24,13 +25,24 @@ function App() {
 		monitorAuthState(auth, callback);
 	}, []);
 
+	function renderModal() {
+		switch (modal.type) {
+			case 'profile':
+				return <ProfileModal direction='right' />;
+			case 'menu':
+				return <MenuModal direction='left' />;
+			default:
+				return null;
+		}
+	}
+
 	return (
 		<div>
 			<Header>
-				<BackButton />
+				<MenuSelectButton />
 				<ProfileIcon />
 			</Header>
-			{modal.isOpen && <ProfileModal direction='right' />}
+			{modal.isOpen && renderModal()}
 		</div>
 	);
 }
