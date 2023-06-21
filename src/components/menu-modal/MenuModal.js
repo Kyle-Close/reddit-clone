@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import PopoutModal from '../PopoutModal';
+import MenuLoggedIn from './MenuLoggedIn';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setModalDirection } from '../../reducers/modal';
@@ -17,7 +18,7 @@ function MenuModal({ direction }) {
 
 	return (
 		<PopoutModal modal={modal}>
-			<p className='w-full h-full bg-red-400'>Hello</p>
+			<MenuLoggedIn />
 		</PopoutModal>
 	);
 }
