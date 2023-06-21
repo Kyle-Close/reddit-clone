@@ -64,3 +64,13 @@ export async function doesUserNameExist(userName) {
 		return false;
 	}
 }
+
+export async function getSubredditNames() {
+	// Returns a list of all subreddit names
+	const querySnapshot = await getDocs(collection(db, 'subreddit-names'));
+	const names = [];
+	querySnapshot.forEach((doc) => {
+		names.push(doc.data().name);
+	});
+	return names;
+}
