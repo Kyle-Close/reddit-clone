@@ -4,7 +4,7 @@ import SearchIcon from '../../img/Search-Icon.png';
 
 function SearchSubreddits({ updateSearchText }) {
 	return (
-		<div className='flex justify-center gap-3 mx-6'>
+		<div className='flex justify-center gap-3 px-6 pb-3 border-b-2 border-gray-500'>
 			<div className='flex justify-center items-center aspect-auto h-full'>
 				<img
 					className='mt-1'
