@@ -5,7 +5,6 @@ import { auth } from '../../firebase';
 
 import Header from '../header/Header';
 import BackButton from '../header/BackButton';
-import { addNewUser } from '../../firebase';
 
 function SignUpPage() {
 	const navigate = useNavigate();
@@ -62,6 +61,15 @@ function SignUpPage() {
 		}
 	}
 
+	function handleUserNameInputKeyDown(e) {
+		const pattern = /[\w]/gi;
+		const isMatch = e.key.match(pattern);
+		if (!isMatch) {
+			// Anything other than a letter, number or _
+			e.preventDefault();
+		}
+	}
+
 	return (
 		<div className='flex flex-col h-screen bg-black'>
 			<Header>
@@ -75,6 +83,7 @@ function SignUpPage() {
 					<div className='grid gap-2'>
 						<label>Username</label>
 						<input
+							onKeyDown={handleUserNameInputKeyDown}
 							onChange={handleFormChange}
 							className='bg-zinc-400 h-12 rounded-md px-3 text-white placeholder-gray-100'
 							placeholder='username'

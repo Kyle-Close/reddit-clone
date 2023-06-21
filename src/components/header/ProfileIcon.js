@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { setIsOpen, setModalDirection, setType } from '../reducers/modal';
-import profileIcon from '../img/Profile-Icon.png';
+import { setIsOpen, setModalDirection, setType } from '../../reducers/modal';
+import profileIcon from '../../img/Profile-Icon.png';
 
 function ProfileIcon() {
 	const dispatch = useDispatch();

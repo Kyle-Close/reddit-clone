@@ -8,7 +8,7 @@ import { monitorAuthState } from './auth';
 
 import ProfileModal from './components/profile-modal/ProfileModal';
 import MenuSelectButton from './components/header/MenuSelectButton';
-import ProfileIcon from './components/ProfileIcon';
+import ProfileIcon from './components/header/ProfileIcon';
 import MenuModal from './components/menu-modal/MenuModal';
 
 function App() {

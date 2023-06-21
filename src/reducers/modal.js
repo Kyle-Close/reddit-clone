@@ -26,7 +26,6 @@ export function setType(type) {
 }
 
 export default function modal(state = initialState, action) {
-	console.log('State: ', state);
 	switch (action.type) {
 		case 'SET_MODAL_DIRECTION':
 			return {
