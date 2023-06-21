@@ -18,6 +18,7 @@ function SignUpPage() {
 
 	function handleFormChange(e) {
 		const inputType = e.target.type;
+
 		let propertyToUpdate;
 		switch (inputType) {
 			case 'text':
@@ -83,6 +84,7 @@ function SignUpPage() {
 					<div className='grid gap-2'>
 						<label>Username</label>
 						<input
+							maxLength={15}
 							onKeyDown={handleUserNameInputKeyDown}
 							onChange={handleFormChange}
 							className='bg-zinc-400 h-12 rounded-md px-3 text-white placeholder-gray-100'
