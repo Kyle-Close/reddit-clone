@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
-import { createNewUser } from '../auth';
-import { auth } from '../firebase';
+import { createNewUser } from '../../auth';
+import { auth } from '../../firebase';
 
-import Header from './header/Header';
-import BackButton from './header/BackButton';
-import { addNewUser } from '../firebase';
+import Header from '../header/Header';
+import BackButton from '../header/BackButton';
+import { addNewUser } from '../../firebase';
 
 function SignUpPage() {
 	const navigate = useNavigate();

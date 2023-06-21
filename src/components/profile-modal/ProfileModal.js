@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
-import PopoutModal from '../components/PopoutModal';
-import snooLoggedOut from '../img/snoo.png';
-import snooLoggedIn from '../img/snoo-logged-in.png';
-import karma from '../img/karma.svg';
-import cake from '../img/cake.svg';
+import PopoutModal from '../PopoutModal';
+import snooLoggedOut from '../../img/snoo.png';
+import snooLoggedIn from '../../img/snoo-logged-in.png';
+import karma from '../../img/karma.svg';
+import cake from '../../img/cake.svg';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setModalDirection } from '../reducers/modal';
+import { setModalDirection } from '../../reducers/modal';
 
-import { logout } from '../auth';
-import { auth } from '../firebase';
-import { getUserById } from '../firebase';
+import { logout } from '../../auth';
+import { auth } from '../../firebase';
+import { getUserById } from '../../firebase';
 
 function ProfileModal({ direction }) {
 	const navigate = useNavigate();

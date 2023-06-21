@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
-import { signInUser } from '../auth';
-import { auth } from '../firebase';
+import { signInUser } from '../../auth';
+import { auth } from '../../firebase';
 
-import Header from './header/Header';
-import BackButton from './header/BackButton';
+import Header from '../header/Header';
+import BackButton from '../header/BackButton';
 
 function SignInPage() {
 	const navigate = useNavigate();

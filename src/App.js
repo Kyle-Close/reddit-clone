@@ -6,7 +6,7 @@ import { setUserId } from './reducers/authState';
 import { auth } from './firebase';
 import { monitorAuthState } from './auth';
 
-import ProfileModal from './components/ProfileModal';
+import ProfileModal from './components/profile-modal/ProfileModal';
 import BackButton from './components/header/BackButton';
 import ProfileIcon from './components/ProfileIcon';
 
