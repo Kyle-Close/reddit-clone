@@ -38,7 +38,7 @@ function App() {
 
 	return (
 		<div>
-			<Header>
+			<Header justify='justify-between'>
 				<MenuSelectButton />
 				<ProfileIcon />
 			</Header>

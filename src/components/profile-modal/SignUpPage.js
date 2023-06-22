@@ -73,7 +73,7 @@ function SignUpPage() {
 
 	return (
 		<div className='flex flex-col h-screen bg-black'>
-			<Header>
+			<Header justify='justify-between'>
 				<BackButton />
 			</Header>
 			<div className='bg-zinc-700 grow mx-4 my-6 rounded-md text-gray-200'>

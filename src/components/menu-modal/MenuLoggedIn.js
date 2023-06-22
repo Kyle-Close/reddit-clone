@@ -25,7 +25,8 @@ function MenuLoggedIn() {
 					<MenuCard
 						key={key}
 						icon={SubredditIcon}
-						title={name}
+						name={name}
+						link={`/r/${name}`}
 					/>
 				);
 			});
@@ -39,7 +40,8 @@ function MenuLoggedIn() {
 			<SearchSubreddits updateSearchText={updateSearchText} />
 			<MenuCard
 				icon={AddIcon}
-				title='Create a Subreddit'
+				name='Create a Subreddit'
+				link={'/create_subreddit'}
 			/>
 			<h4 className='mx-4 my-4 font-semibold'>Your Subreddits</h4>
 			{subredditCards && subredditCards}
