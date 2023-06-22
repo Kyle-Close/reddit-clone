@@ -6,6 +6,7 @@ import SignInPage from './components/profile-modal/SignInPage';
 import CreateSubreddit from './components/subreddit-page/CreateSubreddit';
 import Subreddit from './components/subreddit-page/Subreddit';
 import CreatePost from './components/subreddit-page/CreatePost';
+import Post from './components/post-page/Post';
 
 export default createBrowserRouter([
 	{
@@ -34,6 +35,6 @@ export default createBrowserRouter([
 	},
 	{
 		path: '/r/:subredditName/:postId',
-		element: <div>Post</div>,
+		element: <Post />,
 	},
 ]);

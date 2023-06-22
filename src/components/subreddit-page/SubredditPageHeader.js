@@ -5,6 +5,7 @@ import MenuSelectButton from '../header/MenuSelectButton';
 
 import CreatePostIcon from '../header/CreatePostIcon';
 import ProfileIcon from '../header/ProfileIcon';
+import SubredditWithSubButton from '../header/SubredditWithSubButton';
 
 function SubredditPageHeader({ subredditName }) {
 	return (
@@ -14,15 +15,7 @@ function SubredditPageHeader({ subredditName }) {
 		>
 			<div className='flex gap-12'>
 				<MenuSelectButton />
-				<div className='flex flex-col text-gray-200 gap-1'>
-					<h6 className='text-xs'>{`/r/${subredditName.toLowerCase()}`}</h6>
-					<button
-						className='border-gray-200 border px-2.5 py-0.5 rounded-full
-        text-xs'
-					>
-						Subscribe
-					</button>
-				</div>
+				<SubredditWithSubButton subredditName={subredditName} />
 			</div>
 			<div className='flex gap-8'>
 				<CreatePostIcon />

@@ -11,6 +11,7 @@ import {
 	collection,
 	addDoc,
 } from 'firebase/firestore';
+import { async } from 'q';
 import { v4 as uuidv4 } from 'uuid';
 
 // Your web app's Firebase configuration
@@ -126,5 +127,32 @@ export async function getAllPostsInSubreddit(subredditId) {
 			postList.push(doc.data());
 		});
 		return postList;
+	}
+}
+
+export async function getSubredditIdFromPostId(postId) {
+	const postQuery = query(
+		collection(db, 'posts'),
+		where('postId', '==', postId)
+	);
+	const querySnapshot = await getDocs(postQuery);
+	if (!querySnapshot.empty) {
+		return querySnapshot.docs[0].data().subredditId;
+	} else {
+		// Subreddit does not exist
+		return false;
+	}
+}
+
+export async function getSubredditNameFromSubredditId(subredditId) {
+	const postQuery = query(
+		collection(db, 'subreddit-names'),
+		where('id', '==', subredditId)
+	);
+	const querySnapshot = await getDocs(postQuery);
+	if (!querySnapshot.empty) {
+		return querySnapshot.docs[0].data().name;
+	} else {
+		return false;
 	}
 }
