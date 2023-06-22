@@ -14,7 +14,7 @@ function ProfileModal({ direction }) {
 
 	useEffect(() => {
 		dispatch(setIsOpen(true));
-	}, [direction, authState]);
+	}, [direction, authState, dispatch]);
 
 	return (
 		<PopoutModal modal={modal}>

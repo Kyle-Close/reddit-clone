@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { auth } from './firebase';
 
 import './index.css';
@@ -10,6 +9,7 @@ import store from './reducers';
 import router from './routes';
 import { setUserId } from './reducers/authState';
 import { monitorAuthState } from './auth';
+import { getAllPostsInSubreddit } from './firebase';
 
 // Your initialization function
 function initialize() {
@@ -22,8 +22,8 @@ function initialize() {
 }
 
 // Call your initialization function
+getAllPostsInSubreddit("2")
 initialize();
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

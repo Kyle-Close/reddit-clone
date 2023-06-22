@@ -9,7 +9,9 @@ import {
 	getDocs,
 	where,
 	collection,
+	addDoc
 } from 'firebase/firestore';
+import { async } from 'q';
 import { v4 as uuidv4 } from 'uuid';
 
 // Your web app's Firebase configuration
@@ -81,4 +83,43 @@ export async function addNewSubreddit(name) {
 		id: uuidv4(),
 		name: name,
 	});
+}
+
+export async function getSubredditId(name){
+	const subredditQuery = query(
+		collection(db, 'subreddit-names'),
+		where('name', '==', name)
+	);
+	const querySnapshot = await getDocs(subredditQuery);
+	if (!querySnapshot.empty) {
+		return querySnapshot.docs[0].data().id
+	} else {
+		// Subreddit does not exist
+		return false;
+	}
+}
+
+export async function createPost(subredditId, title, description){
+    const postsCollection = collection(db, 'posts');
+    const docRef = await addDoc(postsCollection, {
+        postId: uuidv4(),
+        subredditId: subredditId,
+        title: title,
+        description: description,
+    });
+}
+
+export async function getAllPostsInSubreddit(subredditId){
+	const subredditQuery = query(
+		collection(db, 'posts'),
+		where('subredditId', '==', subredditId)
+	);
+	const querySnapshot = await getDocs(subredditQuery);
+
+	if(querySnapshot.empty) return false
+	else{
+		querySnapshot.docs.forEach(doc => {
+			console.log(doc.data())
+		});
+	}
 }

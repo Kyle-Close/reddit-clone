@@ -4,34 +4,62 @@ import { useParams } from 'react-router';
 import Header from '../header/Header';
 import BackButton from '../header/BackButton';
 import PostButton from '../header/PostButton';
+import { createPost, getSubredditId } from '../../firebase';
 
 function CreatePost() {
+	const [title, setTitle] = React.useState(null)
+	const [description, setDescription] = React.useState(null)
 	const { subredditName } = useParams();
 
-	function handleInputChange(e) {
-		console.log(e.target.value);
+	function isPostValid(){
+		let isValid = true
+		if(!title || title.length < 1) isValid = false
+		if(!description || description.length < 1) isValid = false
+		return isValid
 	}
+
+	function handleTitleInputChange(e) {
+		setTitle(e.target.value)
+	}
+
+	function handleDescriptionInputChange(e){
+		setDescription(e.target.value)
+	}
+
+	async function handleSubmit(){
+		// 0. Check if title and description are filled out
+		if(!isPostValid()) {
+			console.log('invalid')
+			return
+		}
+		// 1. Get subreddit id
+		const id = await getSubredditId(subredditName)
+		// 2. Add post to "posts" collection
+		createPost(id, title, description)
+		// 3. Navigate user to post page
+	}
+
 	return (
 		<div className='flex flex-col h-screen bg-black text-gray-200'>
 			<Header gap='gap-12'>
 				<BackButton />
 				<h1 className='font-semibold text-lg'>{`/r/${subredditName.toLowerCase()}`}</h1>
 				<div className='grow h-full flex justify-end items-center mr-6'>
-					<PostButton />
+					<PostButton handleSubmit={handleSubmit} />
 				</div>
 			</Header>
 
 			<div className='mx-8 my-6 flex flex-col gap-6 h-full'>
 				<input
 					maxLength={50}
-					onChange={handleInputChange}
+					onChange={handleTitleInputChange}
 					className='bg-zinc-600 h-12 rounded-md px-3 text-white placeholder-gray-400'
 					placeholder='Title'
 					required
 				/>
 				<textarea
 					maxLength={10000}
-					onChange={handleInputChange}
+					onChange={handleDescriptionInputChange}
 					className='bg-zinc-600 h-full rounded-md py-3 px-3 text-white placeholder-gray-400'
 					placeholder='Description'
 					required
