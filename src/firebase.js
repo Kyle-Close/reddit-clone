@@ -10,6 +10,7 @@ import {
 	where,
 	collection,
 } from 'firebase/firestore';
+import { v4 as uuidv4 } from 'uuid';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -73,4 +74,11 @@ export async function getSubredditNames() {
 		names.push(doc.data().name);
 	});
 	return names;
+}
+
+export async function addNewSubreddit(name) {
+	await setDoc(doc(db, 'subreddit-names', name), {
+		id: uuidv4(),
+		name: name,
+	});
 }
