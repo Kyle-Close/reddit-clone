@@ -3,8 +3,9 @@ import App from './App';
 
 import SignUpPage from './components/profile-modal/SignUpPage';
 import SignInPage from './components/profile-modal/SignInPage';
-import CreateSubreddit from './components/CreateSubreddit';
-import Subreddit from './components/Subreddit';
+import CreateSubreddit from './components/subreddit-page/CreateSubreddit';
+import Subreddit from './components/subreddit-page/Subreddit';
+import CreatePost from './components/subreddit-page/CreatePost';
 
 export default createBrowserRouter([
 	{
@@ -26,5 +27,9 @@ export default createBrowserRouter([
 	{
 		path: '/r/:subredditName',
 		element: <Subreddit />,
+	},
+	{
+		path: '/r/:subredditName/create_post',
+		element: <CreatePost />,
 	},
 ]);

@@ -1,8 +1,8 @@
 import React from 'react';
-import Header from './header/Header';
-import BackButton from './header/BackButton';
+import Header from '../header/Header';
+import BackButton from '../header/BackButton';
 
-import { getSubredditNames, addNewSubreddit } from '../firebase';
+import { getSubredditNames, addNewSubreddit } from '../../firebase';
 import { useNavigate } from 'react-router';
 
 function CreateSubreddit() {
