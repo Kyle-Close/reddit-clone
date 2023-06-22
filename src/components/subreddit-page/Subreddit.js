@@ -58,7 +58,11 @@ function Subreddit() {
 			{postCards && postCards}
 			{!postCards && (
 				<h1 className='font-bold text-center mt-8 text-red-500'>
-					Looks like there are no posts yet. Be the first!
+					Looks like there are no posts here yet
+					<br />
+					<span className='text-gray-300 font-thin'>
+						Be the first by clicking the edit icon above.
+					</span>
 				</h1>
 			)}
 			{modal.isOpen && renderModal()}
