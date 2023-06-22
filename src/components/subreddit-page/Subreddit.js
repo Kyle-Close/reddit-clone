@@ -39,6 +39,8 @@ function Subreddit() {
 						title={postData.title}
 						numUpvotes={postData.upvotes}
 						numDownvotes={postData.downvotes}
+						postId={postData.postId}
+						subredditName={subredditName}
 					/>
 				);
 			});
