@@ -1,35 +1,22 @@
 import React from 'react';
+
 import { useParams } from 'react-router';
-import Header from '../header/Header';
-import BackButton from '../header/BackButton';
-import SubredditWithSubButton from '../header/SubredditWithSubButton';
-import {
-	getSubredditIdFromPostId,
-	getSubredditNameFromSubredditId,
-} from '../../firebase';
-import ProfileIcon from '../header/ProfileIcon';
 import { useSelector } from 'react-redux';
+
 import ProfileModal from '../profile-modal/ProfileModal';
 import MenuModal from '../menu-modal/MenuModal';
 
+import PostHeader from './PostHeader';
+import UpvoteButton from '../subreddit-page/UpvoteButton';
+import DownvoteButton from '../subreddit-page/DownvoteButton';
+
+import { getPostDataFromPostId } from '../../firebase';
+
 function Post() {
+	const [postData, setPostData] = React.useState(null);
+
 	const { postId } = useParams();
-	const [subredditName, setSubredditName] = React.useState(null);
-
 	const modal = useSelector((state) => state.modal);
-
-	React.useEffect(() => {
-		getSubredditName();
-	}, []);
-
-	async function getSubredditName() {
-		const subredditIdValue = await getSubredditIdFromPostId(postId);
-		const subredditNameValue = await getSubredditNameFromSubredditId(
-			subredditIdValue
-		);
-
-		setSubredditName(subredditNameValue);
-	}
 
 	function renderModal() {
 		switch (modal.type) {
@@ -42,23 +29,33 @@ function Post() {
 		}
 	}
 
+	React.useEffect(() => {
+		async function fetchPostData() {
+			const dataVal = await getPostDataFromPostId(postId);
+			setPostData(dataVal);
+		}
+		fetchPostData();
+	}, []);
+
+	React.useEffect(() => {
+		console.log(postData);
+	}, [postData]);
+
 	return (
-		<div>
-			<Header
-				justify={'justify-between'}
-				gap={'gap-12'}
-			>
-				<div className='flex gap-12'>
-					<BackButton />
-					{subredditName && (
-						<SubredditWithSubButton subredditName={subredditName} />
-					)}
+		<div className='h-screen bg-black'>
+			<PostHeader />
+			{postData && (
+				<div className='text-gray-300 flex flex-col mx-4 my-8 bg-gray-600 rounded-md px-4 py-4'>
+					<h3>{`/r/AskReddit`}</h3>
+					<p className='text-gray-400 font-semibold text-sm'>{`u/close55`}</p>
+					<h1 className='font-semibold text-lg mt-4'>{postData.title}</h1>
+					<p className='mt-2'>{postData.description}</p>
+					<div className='flex gap-4 text-gray-100 mt-4'>
+						<UpvoteButton numUpvotes={postData.upvotes} />
+						<DownvoteButton numDownvotes={postData.downvotes} />
+					</div>
 				</div>
-				<div>
-					{/* <FilterIcon /> */}
-					<ProfileIcon />
-				</div>
-			</Header>
+			)}
 			{modal.isOpen && renderModal()}
 		</div>
 	);

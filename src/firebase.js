@@ -156,3 +156,16 @@ export async function getSubredditNameFromSubredditId(subredditId) {
 		return false;
 	}
 }
+
+export async function getPostDataFromPostId(postId) {
+	const postQuery = query(
+		collection(db, 'posts'),
+		where('postId', '==', postId)
+	);
+	const querySnapshot = await getDocs(postQuery);
+	if (!querySnapshot.empty) {
+		return querySnapshot.docs[0].data();
+	} else {
+		return false;
+	}
+}

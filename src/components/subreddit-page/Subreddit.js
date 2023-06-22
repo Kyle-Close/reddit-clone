@@ -6,6 +6,7 @@ import ProfileModal from '../profile-modal/ProfileModal';
 import MenuModal from '../menu-modal/MenuModal';
 import SubredditPageHeader from './SubredditPageHeader';
 import PostCard from './PostCard';
+
 import { getAllPostsInSubreddit, getSubredditId } from '../../firebase';
 
 function Subreddit() {
