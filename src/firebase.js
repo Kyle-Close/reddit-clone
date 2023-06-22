@@ -11,7 +11,6 @@ import {
 	collection,
 	addDoc,
 } from 'firebase/firestore';
-import { async } from 'q';
 import { v4 as uuidv4 } from 'uuid';
 
 // Your web app's Firebase configuration
@@ -101,15 +100,20 @@ export async function getSubredditId(name) {
 
 export async function createPost(postId, subredditId, title, description) {
 	const postsCollection = collection(db, 'posts');
-	const docRef = await addDoc(postsCollection, {
+	const timeStamp = Date.now();
+	await addDoc(postsCollection, {
 		postId: postId,
 		subredditId: subredditId,
 		title: title,
 		description: description,
+		upvotes: 0,
+		downvotes: 0,
+		timeStamp: timeStamp,
 	});
 }
 
 export async function getAllPostsInSubreddit(subredditId) {
+	const postList = [];
 	const subredditQuery = query(
 		collection(db, 'posts'),
 		where('subredditId', '==', subredditId)
@@ -119,7 +123,8 @@ export async function getAllPostsInSubreddit(subredditId) {
 	if (querySnapshot.empty) return false;
 	else {
 		querySnapshot.docs.forEach((doc) => {
-			console.log(doc.data());
+			postList.push(doc.data());
 		});
+		return postList;
 	}
 }
