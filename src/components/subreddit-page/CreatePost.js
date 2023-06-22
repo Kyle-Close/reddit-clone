@@ -1,42 +1,47 @@
 import React from 'react';
-import { useParams } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 
 import Header from '../header/Header';
 import BackButton from '../header/BackButton';
 import PostButton from '../header/PostButton';
 import { createPost, getSubredditId } from '../../firebase';
+import { uuidv4 } from '@firebase/util';
 
 function CreatePost() {
-	const [title, setTitle] = React.useState(null)
-	const [description, setDescription] = React.useState(null)
+	const navigate = useNavigate();
+	const [title, setTitle] = React.useState(null);
+	const [description, setDescription] = React.useState(null);
 	const { subredditName } = useParams();
 
-	function isPostValid(){
-		let isValid = true
-		if(!title || title.length < 1) isValid = false
-		if(!description || description.length < 1) isValid = false
-		return isValid
+	function isPostValid() {
+		let isValid = true;
+		if (!title || title.length < 1) isValid = false;
+		if (!description || description.length < 1) isValid = false;
+		return isValid;
 	}
 
 	function handleTitleInputChange(e) {
-		setTitle(e.target.value)
+		setTitle(e.target.value);
 	}
 
-	function handleDescriptionInputChange(e){
-		setDescription(e.target.value)
+	function handleDescriptionInputChange(e) {
+		setDescription(e.target.value);
 	}
 
-	async function handleSubmit(){
+	async function handleSubmit() {
 		// 0. Check if title and description are filled out
-		if(!isPostValid()) {
-			console.log('invalid')
-			return
+		if (!isPostValid()) {
+			console.log('invalid');
+			return;
 		}
+		// 0. Generate post id
+		const postId = uuidv4();
 		// 1. Get subreddit id
-		const id = await getSubredditId(subredditName)
+		const subredditId = await getSubredditId(subredditName);
 		// 2. Add post to "posts" collection
-		createPost(id, title, description)
+		createPost(postId, subredditId, title, description);
 		// 3. Navigate user to post page
+		navigate(`/r/${subredditName}/${postId}`);
 	}
 
 	return (

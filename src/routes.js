@@ -32,4 +32,8 @@ export default createBrowserRouter([
 		path: '/r/:subredditName/create_post',
 		element: <CreatePost />,
 	},
+	{
+		path: '/r/:subredditName/:postId',
+		element: <div>Post</div>,
+	},
 ]);
