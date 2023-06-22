@@ -31,16 +31,21 @@ function Subreddit() {
 	}
 
 	function createPostCards(postList) {
-		const cards = postList.map((postData) => {
-			return (
-				<PostCard
-					title={postData.title}
-					numUpvotes={postData.upvotes}
-					numDownvotes={postData.downvotes}
-				/>
-			);
-		});
-		setPostCards(cards);
+		if (postList.length > 0) {
+			const cards = postList.map((postData, key) => {
+				return (
+					<PostCard
+						key={key}
+						title={postData.title}
+						numUpvotes={postData.upvotes}
+						numDownvotes={postData.downvotes}
+					/>
+				);
+			});
+			setPostCards(cards);
+		} else {
+			setPostCards(null);
+		}
 	}
 
 	React.useEffect(() => {
@@ -50,7 +55,12 @@ function Subreddit() {
 	return (
 		<div className='bg-black h-screen'>
 			<SubredditPageHeader subredditName={subredditName} />
-			{postCards}
+			{postCards && postCards}
+			{!postCards && (
+				<h1 className='font-bold text-center mt-8 text-red-500'>
+					Looks like there are no posts yet. Be the first!
+				</h1>
+			)}
 			{modal.isOpen && renderModal()}
 		</div>
 	);

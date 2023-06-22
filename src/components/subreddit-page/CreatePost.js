@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
 
 import Header from '../header/Header';
 import BackButton from '../header/BackButton';
@@ -8,6 +9,7 @@ import { createPost, getSubredditId } from '../../firebase';
 import { uuidv4 } from '@firebase/util';
 
 function CreatePost() {
+	const authState = useSelector((state) => state.authState);
 	const navigate = useNavigate();
 	const [title, setTitle] = React.useState(null);
 	const [description, setDescription] = React.useState(null);
@@ -29,18 +31,20 @@ function CreatePost() {
 	}
 
 	async function handleSubmit() {
-		// 0. Check if title and description are filled out
-		if (!isPostValid()) {
-			console.log('invalid');
+		// Check if user is logged in
+		if (authState.userId === null) {
+			console.log('Must be signed in...');
 			return;
 		}
-		// 0. Generate post id
+		// Check if title and description are filled out
+		if (!isPostValid()) return;
+		// Generate random id for post
 		const postId = uuidv4();
-		// 1. Get subreddit id
+		// Get subreddit id
 		const subredditId = await getSubredditId(subredditName);
-		// 2. Add post to "posts" collection
+		// Add post to "posts" collection
 		createPost(postId, subredditId, title, description);
-		// 3. Navigate user to post page
+		// Navigate user to post page
 		navigate(`/r/${subredditName}/${postId}`);
 	}
 
@@ -58,16 +62,28 @@ function CreatePost() {
 				<input
 					maxLength={50}
 					onChange={handleTitleInputChange}
-					className='bg-zinc-600 h-12 rounded-md px-3 text-white placeholder-gray-400'
-					placeholder='Title'
+					className={`bg-zinc-600 h-12 rounded-md px-3 text-white ${
+						authState.userId ? 'placeholder-gray-400' : 'placeholder-red-400'
+					}`}
+					placeholder={
+						authState.userId ? 'Title' : 'You must be signed in to post'
+					}
 					required
+					disabled={!authState.userId}
 				/>
 				<textarea
 					maxLength={10000}
 					onChange={handleDescriptionInputChange}
-					className='bg-zinc-600 h-full rounded-md py-3 px-3 text-white placeholder-gray-400'
-					placeholder='Description'
+					className={`bg-zinc-600 h-full rounded-md py-3 px-3 text-white ${
+						authState.userId ? 'placeholder-gray-400' : 'placeholder-gray-300'
+					}`}
+					placeholder={
+						authState.userId
+							? 'Description'
+							: 'To sign in or sign up, go back and click the profile image in the top right of the page'
+					}
 					required
+					disabled={!authState.userId}
 				/>
 			</div>
 		</div>
