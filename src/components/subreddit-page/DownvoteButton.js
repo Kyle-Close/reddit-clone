@@ -6,14 +6,13 @@ import { downvotePost } from '../../firebase';
 
 function DownvoteButton({ numDownvotes, postId }) {
 	const authState = useSelector((state) => state.authState);
+	const [downvotes, setDownvotes] = React.useState(numDownvotes)
 
 	async function handleDownvoteClick(e) {
 		e.stopPropagation();
 		if(!authState) return
 		if(await downvotePost(postId, authState.userId)){
-			console.log("Success! Post downvoted")
-		}else{
-			console.log("Error. Could not downvote post")
+			setDownvotes(prevDownvotes => prevDownvotes + 1)
 		}
 	}
 
@@ -23,7 +22,7 @@ function DownvoteButton({ numDownvotes, postId }) {
 			className='flex items-end'
 		>
 			<img src={DownvotesIcon} />
-			<p className='text-xs text-red-500 font-semibold'>{numDownvotes}</p>
+			<p className='text-xs text-red-500 font-semibold'>{downvotes}</p>
 		</button>
 	);
 }

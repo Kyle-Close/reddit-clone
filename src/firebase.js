@@ -177,7 +177,6 @@ export async function getPostDataFromPostId(postId) {
 function hasUserDownvotedPost(downvoteUsers, userId){
     if(!Array.isArray(downvoteUsers) || downvoteUsers.length < 1) return false
     if(downvoteUsers.includes(userId)) {
-        console.log('User already downvoted this post')
         return true
     }
     else return false
@@ -186,7 +185,6 @@ function hasUserDownvotedPost(downvoteUsers, userId){
 function hasUserUpvotedPost(upvoteUsers, userId){
     if(!Array.isArray(upvoteUsers) || upvoteUsers.length < 1) return false
     if(upvoteUsers.includes(userId)) {
-        console.log('User already upvoted this post')
         return true
     }
     else return false
@@ -205,7 +203,6 @@ export async function downvotePost(postId, userId) {
 	// 3. Check if the user has already upvoted. If yes, remove the upvote
 	if(hasUserUpvotedPost(docSnapshot.data().upvoteUsers, userId)){
 		// Remove upvote
-		console.log(userId)
 		await updateDoc(postRef, {
 			upvoteUsers: arrayRemove(userId)
 		});
