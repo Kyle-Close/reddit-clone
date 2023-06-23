@@ -10,8 +10,9 @@ import {
 	where,
 	collection,
 	addDoc,
+	updateDoc,
+	increment,
 } from 'firebase/firestore';
-import { async } from 'q';
 import { v4 as uuidv4 } from 'uuid';
 
 // Your web app's Firebase configuration
@@ -168,4 +169,17 @@ export async function getPostDataFromPostId(postId) {
 	} else {
 		return false;
 	}
+}
+
+export async function downvotePost(postId) {
+	const q = query(collection(db, 'posts'), where('postId', '==', postId));
+	const querySnapshot = await getDocs(q);
+
+	querySnapshot.forEach(async (docSnapshot) => {
+		const postRef = doc(db, 'posts', docSnapshot.id);
+		await updateDoc(postRef, {
+			downvotes: increment(1),
+		});
+		console.log('Document successfully updated!');
+	});
 }

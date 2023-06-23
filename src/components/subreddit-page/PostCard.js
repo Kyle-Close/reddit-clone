@@ -27,8 +27,14 @@ function PostCard({
 			<h1 className='grow font-semibold'>{title}</h1>
 			<div className='flex justify-between'>
 				<div className='flex gap-6'>
-					<UpvoteButton numUpvotes={numUpvotes} />
-					<DownvoteButton numDownvotes={numDownvotes} />
+					<UpvoteButton
+						postId={postId}
+						numUpvotes={numUpvotes}
+					/>
+					<DownvoteButton
+						postId={postId}
+						numDownvotes={numDownvotes}
+					/>
 				</div>
 				<CommentButton numComments={numComments} />
 			</div>

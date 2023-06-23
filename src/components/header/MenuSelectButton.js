@@ -7,7 +7,6 @@ import MenuExpand from '../../img/Menu-Expand.png';
 function MenuSelectButton() {
 	const dispatch = useDispatch();
 	function handleButtonClick(e) {
-		console.log('here');
 		e.stopPropagation();
 		dispatch(setType('menu'));
 		dispatch(setModalDirection('left'));

@@ -1,11 +1,12 @@
 import React from 'react';
 
 import DownvotesIcon from '../../img/downvote-icon.png';
+import { downvotePost } from '../../firebase';
 
-function DownvoteButton({ numDownvotes }) {
-	function handleDownvoteClick(e) {
+function DownvoteButton({ numDownvotes, postId }) {
+	async function handleDownvoteClick(e) {
 		e.stopPropagation();
-		console.log('Clicked downvote');
+		downvotePost(postId);
 	}
 	return (
 		<button
