@@ -11,6 +11,7 @@ import UpvoteButton from '../subreddit-page/UpvoteButton';
 import DownvoteButton from '../subreddit-page/DownvoteButton';
 
 import { getPostDataFromPostId } from '../../firebase';
+import Vote from '../subreddit-page/Vote';
 
 function Post() {
 	const [postData, setPostData] = React.useState(null);
@@ -51,12 +52,9 @@ function Post() {
 					<h1 className='font-semibold text-lg mt-4'>{postData.title}</h1>
 					<p className='mt-2'>{postData.description}</p>
 					<div className='flex gap-4 text-gray-100 mt-4'>
-						<UpvoteButton
+						<Vote
 							postId={postData.postId}
 							numUpvotes={postData.upvotes}
-						/>
-						<DownvoteButton
-							postId={postData.postId}
 							numDownvotes={postData.downvotes}
 						/>
 					</div>

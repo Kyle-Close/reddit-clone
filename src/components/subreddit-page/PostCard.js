@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import UpvoteButton from './UpvoteButton';
 import DownvoteButton from './DownvoteButton';
 import CommentButton from './CommentButton';
+import Vote from './Vote';
 
 function PostCard({
 	postId,
@@ -27,12 +28,9 @@ function PostCard({
 			<h1 className='grow font-semibold'>{title}</h1>
 			<div className='flex justify-between'>
 				<div className='flex gap-6'>
-					<UpvoteButton
+					<Vote
 						postId={postId}
 						numUpvotes={numUpvotes}
-					/>
-					<DownvoteButton
-						postId={postId}
 						numDownvotes={numDownvotes}
 					/>
 				</div>

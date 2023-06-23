@@ -13,7 +13,7 @@ import {
 	updateDoc,
 	increment,
 	arrayUnion,
-	arrayRemove
+	arrayRemove,
 } from 'firebase/firestore';
 import { async } from 'q';
 import { v4 as uuidv4 } from 'uuid';
@@ -174,38 +174,47 @@ export async function getPostDataFromPostId(postId) {
 	}
 }
 
-function hasUserDownvotedPost(downvoteUsers, userId){
-    if(!Array.isArray(downvoteUsers) || downvoteUsers.length < 1) return false
-    if(downvoteUsers.includes(userId)) {
-        return true
-    }
-    else return false
+function hasUserDownvotedPost(downvoteUsers, userId) {
+	if (!Array.isArray(downvoteUsers) || downvoteUsers.length < 1) return false;
+	if (downvoteUsers.includes(userId)) {
+		return true;
+	} else return false;
 }
 
-function hasUserUpvotedPost(upvoteUsers, userId){
-    if(!Array.isArray(upvoteUsers) || upvoteUsers.length < 1) return false
-    if(upvoteUsers.includes(userId)) {
-        return true
-    }
-    else return false
+function hasUserUpvotedPost(upvoteUsers, userId) {
+	if (!Array.isArray(upvoteUsers) || upvoteUsers.length < 1) return false;
+	if (upvoteUsers.includes(userId)) {
+		return true;
+	} else return false;
 }
 
 export async function downvotePost(postId, userId) {
-    // 1. Find the post the is being downvoted based on id
-    const postIdQuery = query(collection(db, 'posts'), where('postId', '==', postId));
-    const postSnapshot = await getDocs(postIdQuery); // Snapshot of all docs
+	// Return values:
+	//	-1 = removed upvote
+	// 	0  = was not able to downvote
+	// 	1  = successfully downvoted
+	let removedUpvote = false;
+
+	// 1. Find the post the is being downvoted based on id
+	const postIdQuery = query(
+		collection(db, 'posts'),
+		where('postId', '==', postId)
+	);
+	const postSnapshot = await getDocs(postIdQuery); // Snapshot of all docs
 	const docSnapshot = postSnapshot.docs[0]; // Snapshot of just first doc
 	const postRef = doc(db, 'posts', docSnapshot.id);
 
-    // 2. Check if user has already downvoted. If yes return
-    if(hasUserDownvotedPost(docSnapshot.data().downvoteUsers, userId)) return;
+	// 2. Check if user has already downvoted. If yes return
+	if (hasUserDownvotedPost(docSnapshot.data().downvoteUsers, userId)) return 0;
 
 	// 3. Check if the user has already upvoted. If yes, remove the upvote
-	if(hasUserUpvotedPost(docSnapshot.data().upvoteUsers, userId)){
+	if (hasUserUpvotedPost(docSnapshot.data().upvoteUsers, userId)) {
 		// Remove upvote
 		await updateDoc(postRef, {
-			upvoteUsers: arrayRemove(userId)
+			upvoteUsers: arrayRemove(userId),
 		});
+
+		removedUpvote = true;
 	}
 
 	// 4. Can now safely add downvote
@@ -215,8 +224,53 @@ export async function downvotePost(postId, userId) {
 
 	// 5. Add user id to downvotes downvoteUsers
 	await updateDoc(postRef, {
-		downvoteUsers: arrayUnion(userId)
+		downvoteUsers: arrayUnion(userId),
 	});
 
-	return true
+	return removedUpvote ? -1 : 1;
+}
+
+export async function upvotePost(postId, userId) {
+	// 	Return values:
+	//	-1 = removed downvote
+	// 	0  = was not able to upvote
+	// 	1  = successfully upvoted with no removal
+	let removedDownvote = false;
+
+	// 1. Find the post the is being downvoted based on id
+	const postIdQuery = query(
+		collection(db, 'posts'),
+		where('postId', '==', postId)
+	);
+	const postSnapshot = await getDocs(postIdQuery); // Snapshot of all docs
+	const docSnapshot = postSnapshot.docs[0]; // Snapshot of just first doc
+	const postRef = doc(db, 'posts', docSnapshot.id);
+
+	// 2. Check if user has already upvoted. If yes return
+	if (hasUserUpvotedPost(docSnapshot.data().upvoteUsers, userId)) return 0;
+
+	// 3. Check if the user has already upvoted. If yes, remove the upvote
+	if (hasUserDownvotedPost(docSnapshot.data().downvoteUsers, userId)) {
+		// Remove downvote
+		await updateDoc(postRef, {
+			downvoteUsers: arrayRemove(userId),
+		});
+		// Decrement downvote count
+		await updateDoc(postRef, {
+			downvotes: increment(-1),
+		});
+		removedDownvote = true;
+	}
+
+	// 4. Can now safely add upvote
+	await updateDoc(postRef, {
+		upvotes: increment(1),
+	});
+
+	// 5. Add user id to upvoteUsers
+	await updateDoc(postRef, {
+		upvoteUsers: arrayUnion(userId),
+	});
+
+	return removedDownvote ? -1 : 1;
 }
