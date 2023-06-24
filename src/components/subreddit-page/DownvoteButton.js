@@ -9,7 +9,7 @@ function DownvoteButton({ numDownvotes, postId, setUpvotes, setDownvotes }) {
 
 	async function handleDownvoteClick(e) {
 		e.stopPropagation();
-		if (!authState) return;
+		if (!authState || authState.userId === null) return;
 		const downvoteResult = await postService.downvotePost(postId, authState.userId);
 		if (downvoteResult) {
 			// increment downvote state

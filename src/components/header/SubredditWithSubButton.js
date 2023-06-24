@@ -25,8 +25,9 @@ function SubredditWithSubButton() {
 	}, [subredditName, authState]);
 
 	async function isUserSubscribed(subId) {
-		console.log(authState.userId)
-		if (!authState || !subId) return;
+		if(!authState || authState.userId === null || !subId) return;
+		console.log('hereee', subId, authState.userId)
+	
 		const isSubbed = await userService.isUserSubscribedToSubreddit(subId, authState.userId);
 		setSubscribed(isSubbed);
 	}
@@ -34,7 +35,7 @@ function SubredditWithSubButton() {
 	async function fetchSubredditId() {
 		const subId = await subredditService.getSubredditId(subredditName);
 		setSubredditId(subId);
-		isUserSubscribed(subId);
+		await isUserSubscribed(subId);
 	}
 
 	async function handleSubscribe() {

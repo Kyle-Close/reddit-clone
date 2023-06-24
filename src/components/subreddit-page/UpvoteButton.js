@@ -9,7 +9,7 @@ function UpvoteButton({ numUpvotes, postId, setUpvotes, setDownvotes }) {
 
 	async function handleUpvoteClick(e) {
 		e.stopPropagation();
-		if (!authState) return;
+		if (!authState || authState.userId === null ) return;
 		const upvoteResult = await postService.upvotePost(postId, authState.userId);
 		if (upvoteResult) {
 			// increment upvote state
