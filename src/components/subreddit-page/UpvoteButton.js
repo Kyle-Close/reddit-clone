@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import UpvotesIcon from '../../img/upvote-icon.png';
-import { upvotePost } from '../../firebase';
+import {postService} from '../../firebase';
 
 function UpvoteButton({ numUpvotes, postId, setUpvotes, setDownvotes }) {
 	const authState = useSelector((state) => state.authState);
@@ -10,7 +10,7 @@ function UpvoteButton({ numUpvotes, postId, setUpvotes, setDownvotes }) {
 	async function handleUpvoteClick(e) {
 		e.stopPropagation();
 		if (!authState) return;
-		const upvoteResult = await upvotePost(postId, authState.userId);
+		const upvoteResult = await postService.upvotePost(postId, authState.userId);
 		if (upvoteResult) {
 			// increment upvote state
 			setUpvotes((prev) => prev + 1);

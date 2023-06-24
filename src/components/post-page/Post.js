@@ -7,10 +7,8 @@ import ProfileModal from '../profile-modal/ProfileModal';
 import MenuModal from '../menu-modal/MenuModal';
 
 import PostHeader from './PostHeader';
-import UpvoteButton from '../subreddit-page/UpvoteButton';
-import DownvoteButton from '../subreddit-page/DownvoteButton';
 
-import { getPostDataFromPostId } from '../../firebase';
+import {postService} from '../../firebase';
 import Vote from '../subreddit-page/Vote';
 
 function Post() {
@@ -32,7 +30,7 @@ function Post() {
 
 	React.useEffect(() => {
 		async function fetchPostData() {
-			const dataVal = await getPostDataFromPostId(postId);
+			const dataVal = await postService.getPostDataFromPostId(postId);
 			setPostData(dataVal);
 		}
 		fetchPostData();

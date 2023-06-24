@@ -5,11 +5,11 @@ import {
 	signOut,
 } from 'firebase/auth';
 
-import { addNewUser, doesUserNameExist } from './firebase';
+import {userService} from './firebase';
 
 export async function createNewUser(auth, email, password, userName) {
 	// Check if user name exists in cloud user database
-	if (await doesUserNameExist(userName)) {
+	if (await userService.doesUserNameExist(userName)) {
 		return 'Username already exists';
 	} else {
 		try {
@@ -22,7 +22,7 @@ export async function createNewUser(auth, email, password, userName) {
 			const { createdAt } = user.metadata;
 			// 2. Add user to user name database on cloud
 			const { uid } = user;
-			await addNewUser(uid, userName, createdAt);
+			await userService.addNewUser(uid, userName, createdAt);
 
 			return true;
 		} catch (error) {

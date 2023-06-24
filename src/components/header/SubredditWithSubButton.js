@@ -1,12 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
-import {
-	addSubredditToUserSubreddits,
-	getSubredditId,
-	isUserSubscribedToSubreddit,
-	removeSubscribedSubreddit,
-} from '../../firebase';
+import {subredditService, userService} from '../../firebase';
 
 function SubredditWithSubButton() {
 	const authState = useSelector((state) => state.authState);
@@ -29,18 +24,15 @@ function SubredditWithSubButton() {
 		fetchData();
 	}, [subredditName, authState]);
 
-	React.useEffect(() => {
-		console.log(subscribed);
-	}, [subscribed]);
-
 	async function isUserSubscribed(subId) {
+		console.log(authState.userId)
 		if (!authState || !subId) return;
-		const isSubbed = await isUserSubscribedToSubreddit(subId, authState.userId);
+		const isSubbed = await userService.isUserSubscribedToSubreddit(subId, authState.userId);
 		setSubscribed(isSubbed);
 	}
 
 	async function fetchSubredditId() {
-		const subId = await getSubredditId(subredditName);
+		const subId = await subredditService.getSubredditId(subredditName);
 		setSubredditId(subId);
 		isUserSubscribed(subId);
 	}
@@ -48,13 +40,12 @@ function SubredditWithSubButton() {
 	async function handleSubscribe() {
 		if (!authState || subscribed) return;
 
-		const success = await addSubredditToUserSubreddits(
+		const success = await userService.addSubredditToUserSubreddits(
 			subredditId,
 			authState.userId
 		);
 
 		if (success) {
-			console.log('Added subreddit to user list!');
 			setSubscribed(true);
 		}
 	}
@@ -62,7 +53,7 @@ function SubredditWithSubButton() {
 	async function handleUnsubscribe() {
 		if (!authState || !subscribed) return;
 
-		const success = await removeSubscribedSubreddit(
+		const success = await userService.removeSubscribedSubreddit(
 			subredditId,
 			authState.userId
 		);

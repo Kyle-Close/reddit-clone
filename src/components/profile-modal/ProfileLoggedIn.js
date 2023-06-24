@@ -7,7 +7,7 @@ import cake from '../../img/cake.svg';
 
 import { logout } from '../../auth';
 import { auth } from '../../firebase';
-import { getUserById } from '../../firebase';
+import {userService} from '../../firebase';
 
 function ProfileLoggedIn() {
 	const [isLoading, setIsLoading] = React.useState(true);
@@ -19,7 +19,7 @@ function ProfileLoggedIn() {
 
 	async function populateProfileFromDB() {
 		setIsLoading(true);
-		const user = await getUserById(authState.userId);
+		const user = await userService.getUserById(authState.userId);
 		const { userName, karma, createdAt } = user;
 		setUserName(userName);
 		setUserKarma(karma);

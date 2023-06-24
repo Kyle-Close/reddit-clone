@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../header/Header';
 import BackButton from '../header/BackButton';
 
-import { getSubredditNames, addNewSubreddit } from '../../firebase';
+import {subredditService} from '../../firebase';
 import { useNavigate } from 'react-router';
 
 function CreateSubreddit() {
@@ -13,7 +13,7 @@ function CreateSubreddit() {
 		e.preventDefault();
 		// Check if subreddit name is taken already
 		async function checkIfSubredditExists() {
-			const names = await getSubredditNames();
+			const names = await subredditService.getSubredditNames();
 			let exists = false;
 			names.forEach((name) => {
 				if (name.toUpperCase() === subredditName.toUpperCase()) exists = true;
@@ -24,7 +24,7 @@ function CreateSubreddit() {
 		// If not taken, create subreddit by adding it to database
 		checkIfSubredditExists().then((exists) => {
 			if (!exists) {
-				addNewSubreddit(subredditName);
+				subredditService.addNewSubreddit(subredditName);
 			}
 		});
 

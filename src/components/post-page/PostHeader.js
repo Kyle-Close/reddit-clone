@@ -7,10 +7,7 @@ import FilterIcon from '../header/FilterIcon';
 import ProfileIcon from '../header/ProfileIcon';
 import BackButton from '../header/BackButton';
 
-import {
-	getSubredditIdFromPostId,
-	getSubredditNameFromSubredditId,
-} from '../../firebase';
+import {subredditService} from '../../firebase';
 
 function PostHeader() {
 	const [subredditName, setSubredditName] = React.useState(null);
@@ -22,8 +19,8 @@ function PostHeader() {
 	}, []);
 
 	async function getSubredditName() {
-		const subredditIdValue = await getSubredditIdFromPostId(postId);
-		const subredditNameValue = await getSubredditNameFromSubredditId(
+		const subredditIdValue = await subredditService.getSubredditIdFromPostId(postId);
+		const subredditNameValue = await subredditService.getSubredditNameFromSubredditId(
 			subredditIdValue
 		);
 

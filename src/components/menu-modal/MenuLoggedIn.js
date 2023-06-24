@@ -2,7 +2,7 @@ import React from 'react';
 
 import SearchSubreddits from './SearchSubreddits';
 import MenuCard from './MenuCard';
-import { getSubredditNames } from '../../firebase';
+import {subredditService} from '../../firebase';
 
 import AddIcon from '../../img/Add-Icon.png';
 import SubredditIcon from '../../img/subreddit-icon.svg';
@@ -18,7 +18,7 @@ function MenuLoggedIn() {
 
 	React.useEffect(() => {
 		async function createSubredditCards() {
-			const subredditNames = await getSubredditNames();
+			const subredditNames = await subredditService.getSubredditNames();
 			const cards = subredditNames.map((name, key) => {
 				return (
 					<MenuCard

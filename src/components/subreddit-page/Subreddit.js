@@ -7,7 +7,7 @@ import MenuModal from '../menu-modal/MenuModal';
 import SubredditPageHeader from './SubredditPageHeader';
 import PostCard from './PostCard';
 
-import { getAllPostsInSubreddit, getSubredditId } from '../../firebase';
+import {postService, subredditService} from '../../firebase';
 
 function Subreddit() {
 	const { subredditName } = useParams();
@@ -26,8 +26,8 @@ function Subreddit() {
 	}
 
 	async function getPostList() {
-		const subredditId = await getSubredditId(subredditName);
-		const postList = await getAllPostsInSubreddit(subredditId);
+		const subredditId = await subredditService.getSubredditId(subredditName);
+		const postList = await postService.getAllPostsInSubreddit(subredditId);
 		createPostCards(postList);
 	}
 

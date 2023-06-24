@@ -9,21 +9,21 @@ import store from './reducers';
 import router from './routes';
 import { setUserId } from './reducers/authState';
 import { monitorAuthState } from './auth';
-import { getAllPostsInSubreddit } from './firebase';
 
-// Your initialization function
+import { logout } from './auth';
+
 function initialize() {
 	const callback = (user) => {
+    console.log('here', user)
 		if (user) store.dispatch(setUserId(user.uid));
 		else store.dispatch(setUserId(null));
 	};
+  console.log('yup', auth)
 	monitorAuthState(auth, callback)
-  // Add your initialization code here
 }
 
-// Call your initialization function
-getAllPostsInSubreddit("2")
 initialize();
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

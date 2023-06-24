@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import DownvotesIcon from '../../img/downvote-icon.png';
-import { downvotePost } from '../../firebase';
+import {postService} from '../../firebase';
 
 function DownvoteButton({ numDownvotes, postId, setUpvotes, setDownvotes }) {
 	const authState = useSelector((state) => state.authState);
@@ -10,7 +10,7 @@ function DownvoteButton({ numDownvotes, postId, setUpvotes, setDownvotes }) {
 	async function handleDownvoteClick(e) {
 		e.stopPropagation();
 		if (!authState) return;
-		const downvoteResult = await downvotePost(postId, authState.userId);
+		const downvoteResult = await postService.downvotePost(postId, authState.userId);
 		if (downvoteResult) {
 			// increment downvote state
 			setDownvotes((prev) => prev + 1);
