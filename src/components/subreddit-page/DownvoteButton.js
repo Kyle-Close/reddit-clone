@@ -26,7 +26,7 @@ function DownvoteButton({ numDownvotes, postId, setUpvotes, setDownvotes }) {
 			onClick={handleDownvoteClick}
 			className='flex items-end'
 		>
-			<img src={DownvotesIcon} />
+			<img src={DownvotesIcon} alt='downvote icon'/>
 			<p className='text-xs text-red-500 font-semibold'>{numDownvotes}</p>
 		</button>
 	);

@@ -25,7 +25,7 @@ function UpvoteButton({ numUpvotes, postId, setUpvotes, setDownvotes }) {
 			onClick={handleUpvoteClick}
 			className='flex items-end'
 		>
-			<img src={UpvotesIcon} />
+			<img src={UpvotesIcon} alt='upvote icon'/>
 			<p className='text-xs text-green-500 font-semibold'>{numUpvotes}</p>
 		</button>
 	);

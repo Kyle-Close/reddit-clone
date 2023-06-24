@@ -39,12 +39,11 @@ export async function signInUser(auth, email, password) {
 			email,
 			password
 		);
-		const user = userCredential.user;
-		return true;
+/* 		const user = userCredential.user;
+ */		return true;
 	} catch (error) {
-		const errorCode = error.code;
-		const errorMessage = error.message;
-
+/* 		const errorCode = error.code;
+		const errorMessage = error.message; */
 		return false;
 	}
 }

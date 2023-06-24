@@ -10,8 +10,6 @@ import router from './routes';
 import { setUserId } from './reducers/authState';
 import { monitorAuthState } from './auth';
 
-import { logout } from './auth';
-
 function initialize() {
 	const callback = (user) => {
     console.log('here', user)
