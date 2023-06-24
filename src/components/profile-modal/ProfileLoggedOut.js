@@ -6,7 +6,7 @@ import snooLoggedOut from '../../img/snoo.png';
 function ProfileLoggedOut() {
 	const navigate = useNavigate();
 	return (
-		<div className='flex flex-col items-center w-full h-full'>
+		<div className='flex flex-col items-center w-full h-full max-h-screen'>
 			<div className='mt-12 w-1/2 aspect-auto flex justify-center'>
 				<img
 					className='object-cover'

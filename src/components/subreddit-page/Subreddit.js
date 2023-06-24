@@ -7,7 +7,7 @@ import MenuModal from '../menu-modal/MenuModal';
 import SubredditPageHeader from './SubredditPageHeader';
 import PostCard from './PostCard';
 
-import {postService, subredditService} from '../../firebase';
+import { postService, subredditService } from '../../firebase';
 
 function Subreddit() {
 	const { subredditName } = useParams();
@@ -56,7 +56,7 @@ function Subreddit() {
 	}, [subredditName]);
 
 	return (
-		<div className='bg-black h-screen'>
+		<div className='bg-black h-screen max-h-screen overflow-y-scroll'>
 			<SubredditPageHeader subredditName={subredditName} />
 			{postCards && postCards}
 			{!postCards && (

@@ -8,8 +8,9 @@ import MenuModal from '../menu-modal/MenuModal';
 
 import PostHeader from './PostHeader';
 
-import {postService} from '../../firebase';
-import Vote from '../subreddit-page/Vote';
+import { postService } from '../../firebase';
+
+import PostMainContent from './PostMainContent';
 
 function Post() {
 	const [postData, setPostData] = React.useState(null);
@@ -39,21 +40,7 @@ function Post() {
 	return (
 		<div className='h-screen bg-black'>
 			<PostHeader />
-			{postData && (
-				<div className='text-gray-300 flex flex-col mx-4 my-8 bg-gray-600 rounded-md px-4 py-4'>
-					<h3>{`/r/AskReddit`}</h3>
-					<p className='text-gray-400 font-semibold text-sm'>{`u/close55`}</p>
-					<h1 className='font-semibold text-lg mt-4'>{postData.title}</h1>
-					<p className='mt-2'>{postData.description}</p>
-					<div className='flex gap-4 text-gray-100 mt-4'>
-						<Vote
-							postId={postData.postId}
-							numUpvotes={postData.upvotes}
-							numDownvotes={postData.downvotes}
-						/>
-					</div>
-				</div>
-			)}
+			{postData && <PostMainContent postData={postData} />}
 			{modal.isOpen && renderModal()}
 		</div>
 	);

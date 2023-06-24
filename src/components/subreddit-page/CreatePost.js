@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import Header from '../header/Header';
 import BackButton from '../header/BackButton';
 import PostButton from '../header/PostButton';
-import {postService, subredditService} from '../../firebase';
+import { postService, subredditService } from '../../firebase';
 import { uuidv4 } from '@firebase/util';
 
 function CreatePost() {
@@ -42,7 +42,13 @@ function CreatePost() {
 		// Get subreddit id
 		const subredditId = await subredditService.getSubredditId(subredditName);
 		// Add post to "posts" collection
-		await postService.createPost(postId, subredditId, title, description);
+		await postService.createPost(
+			postId,
+			subredditId,
+			title,
+			description,
+			authState.userId
+		);
 		// Navigate user to post page
 		navigate(`/r/${subredditName}/${postId}`);
 	}

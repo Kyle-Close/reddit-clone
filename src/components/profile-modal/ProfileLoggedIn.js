@@ -7,7 +7,7 @@ import cake from '../../img/cake.svg';
 
 import { logout } from '../../auth';
 import { auth } from '../../firebase';
-import {userService} from '../../firebase';
+import { userService } from '../../firebase';
 
 function ProfileLoggedIn() {
 	const [isLoading, setIsLoading] = React.useState(true);
@@ -46,15 +46,21 @@ function ProfileLoggedIn() {
 	}, []);
 
 	return !isLoading ? (
-		<div className='w-full h-full flex flex-col items-center'>
+		<div className='w-full h-full flex flex-col items-center max-h-screen'>
 			<div className='mt-8'>
-				<img src={snooLoggedIn} alt='reddit mascot snoo'/>
+				<img
+					src={snooLoggedIn}
+					alt='reddit mascot snoo'
+				/>
 			</div>
 			<p className='mt-4 text-gray-200'>u/{userName}</p>
 			<div className='mt-8 flex w-full px-4 text-gray-200 gap-8 justify-center'>
 				<div className='flex gap-4'>
 					<div className='w-10 aspect-auto'>
-						<img src={karma} alt='karma icon'/>
+						<img
+							src={karma}
+							alt='karma icon'
+						/>
 					</div>
 					<div className='grow'>
 						<h4>{userKarma}</h4>
@@ -63,7 +69,10 @@ function ProfileLoggedIn() {
 				</div>
 				<div className='flex gap-3'>
 					<div className='w-12 aspect-auto'>
-						<img src={cake} alt='cake icon'/>
+						<img
+							src={cake}
+							alt='cake icon'
+						/>
 					</div>
 					<div className='flex flex-col'>
 						<h4>

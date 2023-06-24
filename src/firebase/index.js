@@ -4,7 +4,7 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: 'AIzaSyBu9YWRwQ9eutVyIrIha8dxe9CAXNgrQEM',
+	apiKey: 'AIzaSyBu9YWRwQ9eutVyIrIha8dxe9CAXNgrQEM',
 	authDomain: 'reddit-clone-3b1ef.firebaseapp.com',
 	projectId: 'reddit-clone-3b1ef',
 	storageBucket: 'reddit-clone-3b1ef.appspot.com',
@@ -20,3 +20,4 @@ export const auth = getAuth(app);
 export { default as userService } from './userService';
 export { default as postService } from './postService';
 export { default as subredditService } from './subredditService';
+export { default as commentService } from './commentService';

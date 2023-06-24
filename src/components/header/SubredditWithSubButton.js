@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
-import {subredditService, userService} from '../../firebase';
+import { subredditService, userService } from '../../firebase';
 
 function SubredditWithSubButton() {
 	const authState = useSelector((state) => state.authState);
@@ -25,10 +25,12 @@ function SubredditWithSubButton() {
 	}, [subredditName, authState]);
 
 	async function isUserSubscribed(subId) {
-		if(!authState || authState.userId === null || !subId) return;
-		console.log('hereee', subId, authState.userId)
-	
-		const isSubbed = await userService.isUserSubscribedToSubreddit(subId, authState.userId);
+		if (!authState || authState.userId === null || !subId) return;
+
+		const isSubbed = await userService.isUserSubscribedToSubreddit(
+			subId,
+			authState.userId
+		);
 		setSubscribed(isSubbed);
 	}
 
@@ -60,7 +62,6 @@ function SubredditWithSubButton() {
 		);
 
 		if (success) {
-			//console.log('Removed subreddit from user list!');
 			setSubscribed(false);
 		}
 	}

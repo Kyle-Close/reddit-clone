@@ -1,8 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 
-import UpvoteButton from './UpvoteButton';
-import DownvoteButton from './DownvoteButton';
 import CommentButton from './CommentButton';
 import Vote from './Vote';
 
@@ -33,7 +31,10 @@ function PostCard({
 						numDownvotes={numDownvotes}
 					/>
 				</div>
-				<CommentButton numComments={numComments} />
+				<CommentButton
+					postId={postId}
+					numComments={numComments}
+				/>
 			</div>
 		</div>
 	);

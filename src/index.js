@@ -12,21 +12,19 @@ import { monitorAuthState } from './auth';
 
 function initialize() {
 	const callback = (user) => {
-    console.log('here', user)
 		if (user) store.dispatch(setUserId(user.uid));
 		else store.dispatch(setUserId(null));
 	};
-  console.log('yup', auth)
-	monitorAuthState(auth, callback)
+	monitorAuthState(auth, callback);
 }
 
 initialize();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-  </React.StrictMode>
+	<React.StrictMode>
+		<Provider store={store}>
+			<RouterProvider router={router} />
+		</Provider>
+	</React.StrictMode>
 );

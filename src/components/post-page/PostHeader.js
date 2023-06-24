@@ -7,22 +7,22 @@ import FilterIcon from '../header/FilterIcon';
 import ProfileIcon from '../header/ProfileIcon';
 import BackButton from '../header/BackButton';
 
-import {subredditService} from '../../firebase';
+import { subredditService } from '../../firebase';
 
 function PostHeader() {
 	const [subredditName, setSubredditName] = React.useState(null);
 	const { postId } = useParams();
 
 	React.useEffect(() => {
-		console.log('Rendering PostHeader');
 		getSubredditName();
 	}, []);
 
 	async function getSubredditName() {
-		const subredditIdValue = await subredditService.getSubredditIdFromPostId(postId);
-		const subredditNameValue = await subredditService.getSubredditNameFromSubredditId(
-			subredditIdValue
+		const subredditIdValue = await subredditService.getSubredditIdFromPostId(
+			postId
 		);
+		const subredditNameValue =
+			await subredditService.getSubredditNameFromSubredditId(subredditIdValue);
 
 		setSubredditName(subredditNameValue);
 	}

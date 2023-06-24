@@ -38,7 +38,14 @@ function PopoutModal({ children, modal }) {
 }
 
 function getModalClassNames(direction) {
-	const classNames = ['flex', 'flex-col', 'bg-zinc-800', 'absolute', 'max-h-screen'];
+	const classNames = [
+		'flex',
+		'flex-col',
+		'bg-zinc-800',
+		'absolute',
+		'max-h-screen',
+		'overflow-y-auto',
+	];
 
 	if (direction === 'left' || direction === 'right') {
 		classNames.push('w-2/3');
