@@ -38,10 +38,6 @@ function Post() {
 		fetchPostData();
 	}, []);
 
-	React.useEffect(() => {
-		console.log(postData);
-	}, [postData]);
-
 	return (
 		<div className='h-screen bg-black'>
 			<PostHeader />

@@ -15,7 +15,6 @@ import {
 	arrayUnion,
 	arrayRemove,
 } from 'firebase/firestore';
-import { async } from 'q';
 import { v4 as uuidv4 } from 'uuid';
 
 // Your web app's Firebase configuration
@@ -43,6 +42,7 @@ export async function addNewUser(userId, userName, createdAt) {
 		userName: userName,
 		karma: '0',
 		createdAt: createdAt,
+		subreddits: [],
 	});
 }
 
@@ -273,4 +273,51 @@ export async function upvotePost(postId, userId) {
 	});
 
 	return removedDownvote ? -1 : 1;
+}
+
+export async function addSubredditToUserSubreddits(subredditId, userId) {
+	const userIdQuery = query(
+		collection(db, 'users'),
+		where('userId', '==', userId)
+	);
+	const postSnapshot = await getDocs(userIdQuery); // Snapshot of all docs
+	const docSnapshot = postSnapshot.docs[0]; // Snapshot of just first doc
+	const postRef = doc(db, 'users', docSnapshot.id);
+
+	if (!postRef) return false;
+
+	await updateDoc(postRef, {
+		subreddits: arrayUnion(subredditId),
+	});
+	return true;
+}
+
+export async function removeSubscribedSubreddit(subredditId, userId) {
+	const userIdQuery = query(
+		collection(db, 'users'),
+		where('userId', '==', userId)
+	);
+	const postSnapshot = await getDocs(userIdQuery); // Snapshot of all docs
+	const docSnapshot = postSnapshot.docs[0]; // Snapshot of just first doc
+	const postRef = doc(db, 'users', docSnapshot.id);
+
+	if (!postRef) return false;
+
+	await updateDoc(postRef, {
+		subreddits: arrayRemove(subredditId),
+	});
+	return true;
+}
+
+export async function isUserSubscribedToSubreddit(subredditId, userId) {
+	const userIdQuery = query(
+		collection(db, 'users'),
+		where('userId', '==', userId)
+	);
+	const postSnapshot = await getDocs(userIdQuery); // Snapshot of all docs
+	const docSnapshot = postSnapshot.docs[0]; // Snapshot of just first doc
+
+	const userData = docSnapshot.data().subreddits;
+
+	return userData.includes(subredditId);
 }

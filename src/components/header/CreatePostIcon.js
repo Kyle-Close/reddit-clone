@@ -7,7 +7,6 @@ function CreatePostIcon() {
 	const { subredditName } = useParams();
 	const navigate = useNavigate();
 	function handleCreatePost() {
-		console.log(subredditName);
 		navigate(`/r/${subredditName}/create_post`);
 	}
 	return (

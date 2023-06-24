@@ -17,6 +17,7 @@ function PostHeader() {
 	const { postId } = useParams();
 
 	React.useEffect(() => {
+		console.log('Rendering PostHeader');
 		getSubredditName();
 	}, []);
 

@@ -33,7 +33,6 @@ function CreatePost() {
 	async function handleSubmit() {
 		// Check if user is logged in
 		if (authState.userId === null) {
-			console.log('Must be signed in...');
 			return;
 		}
 		// Check if title and description are filled out

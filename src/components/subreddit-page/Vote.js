@@ -8,22 +8,18 @@ function Vote({ postId, numUpvotes, numDownvotes }) {
 
 	return (
 		<>
-			{upvotes && (
-				<>
-					<UpvoteButton
-						postId={postId}
-						numUpvotes={upvotes}
-						setUpvotes={setUpvotes}
-						setDownvotes={setDownvotes}
-					/>
-					<DownvoteButton
-						postId={postId}
-						numDownvotes={downvotes}
-						setUpvotes={setUpvotes}
-						setDownvotes={setDownvotes}
-					/>
-				</>
-			)}
+			<UpvoteButton
+				postId={postId}
+				numUpvotes={upvotes}
+				setUpvotes={setUpvotes}
+				setDownvotes={setDownvotes}
+			/>
+			<DownvoteButton
+				postId={postId}
+				numDownvotes={downvotes}
+				setUpvotes={setUpvotes}
+				setDownvotes={setDownvotes}
+			/>
 		</>
 	);
 }

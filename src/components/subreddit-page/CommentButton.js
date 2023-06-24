@@ -5,7 +5,6 @@ import CommentsIcon from '../../img/comments-icon.png';
 function CommentButton({ numComments }) {
 	function handleDownvoteClick(e) {
 		e.stopPropagation();
-		console.log('Clicked comments');
 	}
 	return (
 		<button

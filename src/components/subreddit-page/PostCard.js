@@ -16,7 +16,6 @@ function PostCard({
 }) {
 	const navigate = useNavigate();
 	function handleCardClick(e) {
-		console.log('Clicked');
 		navigate(`/r/${subredditName}/${postId}`);
 	}
 

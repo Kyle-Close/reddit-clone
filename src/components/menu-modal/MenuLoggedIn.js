@@ -19,7 +19,6 @@ function MenuLoggedIn() {
 	React.useEffect(() => {
 		async function createSubredditCards() {
 			const subredditNames = await getSubredditNames();
-			console.log(subredditNames);
 			const cards = subredditNames.map((name, key) => {
 				return (
 					<MenuCard

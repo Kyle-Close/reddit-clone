@@ -10,7 +10,6 @@ import { addNewUser, doesUserNameExist } from './firebase';
 export async function createNewUser(auth, email, password, userName) {
 	// Check if user name exists in cloud user database
 	if (await doesUserNameExist(userName)) {
-		console.log('Username already exists');
 		return 'Username already exists';
 	} else {
 		try {
@@ -55,6 +54,5 @@ export function monitorAuthState(auth, callbackFn) {
 }
 
 export async function logout(auth) {
-	console.log('logging out')
 	await signOut(auth);
 }
