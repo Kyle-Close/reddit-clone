@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import { commentService, userService } from '../../firebase';
 
 import CommentImage from '../../img/comment-profile-picture.png';
+import RepliesButton from './RepliesButton';
 
 function Comment() {
 	const [commentsList, setCommentsList] = React.useState(null);
@@ -10,6 +11,7 @@ function Comment() {
 
 	async function fetchCommentUserNames(commentsData) {
 		console.log(commentsData[0]);
+		if(!commentsData) return
 		const result = await Promise.all(
 			commentsData.map(async (commentData) => {
 				const userData = await userService.getUserById(commentData.userId);
@@ -43,9 +45,10 @@ function Comment() {
 							alt='commentor profile icon'
 						/>
 					</div>
-					<div className='overflow-auto '>
+					<div className='overflow-auto grow flex flex-col'>
 						<p className='text-xs'>{`u/${commentData.userName}`}</p>
 						<p className='leading-tight'>{commentData.contents}</p>
+						<RepliesButton />					
 					</div>
 				</div>
 			);
