@@ -27,10 +27,6 @@ function CommentPage() {
 		fetchPostData();
 	}, []);
 
-	React.useEffect(() => {
-		console.log(postData);
-	}, [postData]);
-
 	function handleChange(e) {
 		setComment(e.target.value);
 	}

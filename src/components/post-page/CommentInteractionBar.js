@@ -3,10 +3,10 @@ import RepliesButton from './RepliesButton';
 import CommentVote from './CommentVote';
 import ReplyButton from './ReplyButton';
 
-function CommentInteractionBar({ commentId }) {
+function CommentInteractionBar({ commentId, toggleExpanded }) {
 	return (
 		<div className='flex gap-4'>
-			<RepliesButton />
+			<RepliesButton toggleExpanded={toggleExpanded} />
 			<CommentVote />
 			<ReplyButton commentId={commentId} />
 		</div>

@@ -55,7 +55,6 @@ const commentService = {
 		if (commentSnapshot.empty) return;
 		else {
 			const docSnapshot = commentSnapshot.docs[0];
-			console.log(docSnapshot.data());
 			return docSnapshot.data();
 		}
 	},

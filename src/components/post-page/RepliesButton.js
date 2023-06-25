@@ -2,9 +2,9 @@ import React from 'react';
 
 import CommentExpandImage from '../../img/expand-icon.png';
 
-function RepliesButton() {
+function RepliesButton({ toggleExpanded }) {
 	function handleClick() {
-		console.log('Replies button clicked');
+		toggleExpanded();
 	}
 
 	return (

@@ -2,15 +2,14 @@ import React from 'react';
 import { useParams } from 'react-router';
 import { commentService, userService } from '../../firebase';
 
-import CommentImage from '../../img/comment-profile-picture.png';
-import CommentInteractionBar from './CommentInteractionBar';
+import Reply from './Reply';
+import CommentWithReplies from './CommentWithReplies';
 
 function Comment() {
 	const [commentsList, setCommentsList] = React.useState(null);
 	const { postId } = useParams();
 
 	async function fetchCommentUserNames(commentsData) {
-		console.log(commentsData[0]);
 		if (!commentsData) return;
 		const result = await Promise.all(
 			commentsData.map(async (commentData) => {
@@ -34,23 +33,20 @@ function Comment() {
 	function buildCommentElements() {
 		if (!commentsList || commentsList.length < 1) return;
 		return commentsList.map((commentData, key) => {
+			const replySection = commentData.replies.map((replyData, replyKey) => {
+				return (
+					<Reply
+						key={replyKey}
+						replyData={replyData}
+					/>
+				);
+			});
 			return (
-				<div
+				<CommentWithReplies
 					key={key}
-					className='flex gap-3'
-				>
-					<div className='w-10 flex-shrink-0'>
-						<img
-							src={CommentImage}
-							alt='commentor profile icon'
-						/>
-					</div>
-					<div className='overflow-auto grow flex flex-col'>
-						<p className='text-xs'>{`u/${commentData.userName}`}</p>
-						<p className='leading-tight'>{commentData.contents}</p>
-						<CommentInteractionBar commentId={commentData.commentId} />
-					</div>
-				</div>
+					commentData={commentData}
+					replySection={replySection}
+				/>
 			);
 		});
 	}
