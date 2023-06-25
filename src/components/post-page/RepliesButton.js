@@ -2,7 +2,13 @@ import React from 'react';
 
 import CommentExpandImage from '../../img/expand-icon.png';
 
-function RepliesButton({ toggleExpanded }) {
+function RepliesButton({ toggleExpanded, commentData }) {
+	const [numReplies, setNumReplies] = React.useState(null);
+
+	React.useEffect(() => {
+		setNumReplies(commentData.replies.length);
+	}, []);
+
 	function handleClick() {
 		toggleExpanded();
 	}
@@ -16,7 +22,7 @@ function RepliesButton({ toggleExpanded }) {
 				<img src={CommentExpandImage} />
 			</div>
 
-			<p className='text-blue-400 font-semibold'>12 Replies</p>
+			<p className='text-blue-400 font-semibold'>{`${numReplies} Replies`}</p>
 		</button>
 	);
 }
