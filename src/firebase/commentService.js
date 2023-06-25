@@ -26,6 +26,7 @@ const commentService = {
 			upvoteUsers: [],
 			downvoteUsers: [],
 			timeStamp: timeStamp,
+			replies: [],
 		});
 	},
 	async getCommentsFromPostId(postId) {
@@ -43,6 +44,33 @@ const commentService = {
 			});
 			return commentList;
 		}
+	},
+	async getCommentFromCommentId(commentId) {
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+		const commentSnapshot = await getDocs(commentIdQuery);
+
+		if (commentSnapshot.empty) return;
+		else {
+			const docSnapshot = commentSnapshot.docs[0];
+			console.log(docSnapshot.data());
+			return docSnapshot.data();
+		}
+	},
+	async addReplyToComment(commentId, replyData) {
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+		const postSnapshot = await getDocs(commentIdQuery);
+		const docSnapshot = postSnapshot.docs[0];
+		const postRef = doc(db, 'comments', docSnapshot.id);
+
+		await updateDoc(postRef, {
+			replies: arrayUnion(replyData),
+		});
 	},
 };
 

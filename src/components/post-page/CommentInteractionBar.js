@@ -3,12 +3,12 @@ import RepliesButton from './RepliesButton';
 import CommentVote from './CommentVote';
 import ReplyButton from './ReplyButton';
 
-function CommentInteractionBar() {
+function CommentInteractionBar({ commentId }) {
 	return (
 		<div className='flex gap-4'>
 			<RepliesButton />
 			<CommentVote />
-			<ReplyButton />
+			<ReplyButton commentId={commentId} />
 		</div>
 	);
 }

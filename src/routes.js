@@ -8,6 +8,7 @@ import Subreddit from './components/subreddit-page/Subreddit';
 import CreatePost from './components/subreddit-page/CreatePost';
 import Post from './components/post-page/Post';
 import CommentPage from './components/post-page/CommentPage';
+import ReplyPage from './components/post-page/ReplyPage';
 
 export default createBrowserRouter([
 	{
@@ -41,5 +42,9 @@ export default createBrowserRouter([
 	{
 		path: '/r/:subredditName/:postId/comment',
 		element: <CommentPage />,
+	},
+	{
+		path: '/reply/:commentId',
+		element: <ReplyPage />,
 	},
 ]);

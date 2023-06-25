@@ -48,7 +48,7 @@ function Comment() {
 					<div className='overflow-auto grow flex flex-col'>
 						<p className='text-xs'>{`u/${commentData.userName}`}</p>
 						<p className='leading-tight'>{commentData.contents}</p>
-						<CommentInteractionBar />
+						<CommentInteractionBar commentId={commentData.commentId} />
 					</div>
 				</div>
 			);

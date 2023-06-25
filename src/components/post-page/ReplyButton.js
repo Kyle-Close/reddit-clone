@@ -1,10 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router';
 
 import ReplyIcon from '../../img/reply-icon.png';
 
-function ReplyButton() {
+function ReplyButton({ commentId }) {
+	const navigate = useNavigate();
 	function handleClick() {
-		console.log('Reply button clicked');
+		navigate(`/reply/${commentId}`);
 	}
 
 	return (
