@@ -10,7 +10,7 @@ function CommentInteractionBar({ commentId, toggleExpanded, commentData }) {
 				commentData={commentData}
 				toggleExpanded={toggleExpanded}
 			/>
-			<CommentVote />
+			<CommentVote commentId={commentId} />
 			<ReplyButton commentId={commentId} />
 		</div>
 	);

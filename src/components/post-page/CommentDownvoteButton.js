@@ -2,7 +2,7 @@ import React from 'react';
 
 import DownvotesIcon from '../../img/downvote-icon.png';
 
-function CommentDownvoteButton() {
+function CommentDownvoteButton({ numDownvotes }) {
 	async function handleDownvoteClick(e) {
 		console.log('Comment Downvote Clicked');
 	}
@@ -16,7 +16,7 @@ function CommentDownvoteButton() {
 				src={DownvotesIcon}
 				alt='upvote icon'
 			/>
-			<p className='text-xs text-red-500 font-semibold'>2</p>
+			<p className='text-xs text-red-500 font-semibold'>{numDownvotes}</p>
 		</button>
 	);
 }
