@@ -28,6 +28,22 @@ const commentService = {
 			timeStamp: timeStamp,
 		});
 	},
+	async getCommentsFromPostId(postId) {
+		const commentList = [];
+		const commentQuery = query(
+			collection(db, 'comments'),
+			where('postId', '==', postId)
+		);
+		const querySnapshot = await getDocs(commentQuery);
+
+		if (querySnapshot.empty) return false;
+		else {
+			querySnapshot.docs.forEach((doc) => {
+				commentList.push(doc.data());
+			});
+			return commentList;
+		}
+	},
 };
 
 export default commentService;

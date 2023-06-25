@@ -18,7 +18,7 @@ function PostMainContent({ postData }) {
 	}, []);
 
 	return (
-		<div className='text-gray-300 flex flex-col mx-4 my-8 bg-gray-600 rounded-md px-4 py-4'>
+		<div className='text-gray-300 flex flex-col bg-gray-600 rounded-md px-4 py-4'>
 			<h3>{`/r/${subredditName}`}</h3>
 			<p className='text-gray-400 font-semibold text-sm'>{`u/${userName}`}</p>
 			<h1 className='font-semibold text-lg mt-4'>{postData.title}</h1>
