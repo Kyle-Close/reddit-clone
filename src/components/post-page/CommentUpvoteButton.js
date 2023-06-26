@@ -4,9 +4,8 @@ import { useSelector } from 'react-redux';
 import UpvotesIcon from '../../img/upvote-icon.png';
 import { commentService } from '../../firebase';
 
-function CommentUpvoteButton({ numUpvotes, setNumUpvotes, commentId }) {
+function CommentUpvoteButton({ numUpvotes, setNumUpvotes, setNumDownvotes, commentId }) {
 	const authState = useSelector(state => state.authState)
-	console.log(authState)
 	async function handleUpvoteClick() {
 		if(!authState || !authState.userId) return
 		// Check if user already upvoted
@@ -17,6 +16,8 @@ function CommentUpvoteButton({ numUpvotes, setNumUpvotes, commentId }) {
 			await commentService.removeDownvoteUser(authState.userId, commentId)
 			// Decrement downvotes in firebase
 			await commentService.decrementCommentDownvote(commentId)
+			// Decrement downvote counter to display new value locally
+			setNumDownvotes(prev => prev - 1)
 		}
 		// Update the state to display new value locally
 		setNumUpvotes(numUpvotes + 1);

@@ -107,6 +107,19 @@ const commentService = {
 			upvotes: increment(1),
 		});
 	},
+	async incrementCommentDownvote(commentId){
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+		const postSnapshot = await getDocs(commentIdQuery);
+		const docSnapshot = postSnapshot.docs[0];
+		const postRef = doc(db, 'comments', docSnapshot.id);
+
+		await updateDoc(postRef, {
+			downvotes: increment(1),
+		});
+	},
 	async addUserToUpvoteUsers(userId, commentId){
 		const commentIdQuery = query(
 			collection(db, 'comments'),
@@ -144,6 +157,45 @@ const commentService = {
 
 		await updateDoc(postRef, {
 			downvotes: increment(-1),
+		});
+	},
+	async removeUpvoteUser(userId, commentId){
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+		const postSnapshot = await getDocs(commentIdQuery);
+		const docSnapshot = postSnapshot.docs[0];
+		const postRef = doc(db, 'comments', docSnapshot.id);
+
+		await updateDoc(postRef, {
+			upvoteUsers: arrayRemove(userId),
+		});
+	},
+	async decrementCommentUpvote(commentId){
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+		const postSnapshot = await getDocs(commentIdQuery);
+		const docSnapshot = postSnapshot.docs[0];
+		const postRef = doc(db, 'comments', docSnapshot.id);
+
+		await updateDoc(postRef, {
+			upvotes: increment(-1),
+		});
+	},
+	async addUserToDownvoteUsers(userId, commentId){
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+		const postSnapshot = await getDocs(commentIdQuery);
+		const docSnapshot = postSnapshot.docs[0];
+		const postRef = doc(db, 'comments', docSnapshot.id);
+
+		await updateDoc(postRef, {
+			downvoteUsers: arrayUnion(userId),
 		});
 	}
 };
