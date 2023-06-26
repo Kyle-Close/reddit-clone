@@ -56,7 +56,7 @@ function CreatePost() {
 	return (
 		<div className='flex flex-col h-screen bg-black text-gray-200'>
 			<Header gap='gap-12'>
-				<BackButton />
+				<BackButton destination={-1} />
 				<h1 className='font-semibold text-lg'>{`/r/${subredditName.toLowerCase()}`}</h1>
 				<div className='grow h-full flex justify-end items-center mr-6'>
 					<PostButton handleSubmit={handleSubmit} />

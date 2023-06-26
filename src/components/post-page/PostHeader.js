@@ -33,7 +33,7 @@ function PostHeader() {
 			gap={'gap-12'}
 		>
 			<div className='flex gap-12'>
-				<BackButton />
+				<BackButton destination={`/r/${subredditName}`} />
 				{subredditName && (
 					<SubredditWithSubButton subredditName={subredditName} />
 				)}

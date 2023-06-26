@@ -2,10 +2,10 @@ import React from 'react';
 import backIcon from '../../img/Back Icon.png';
 import { useNavigate } from 'react-router';
 
-function BackButton() {
+function BackButton({ destination }) {
 	const navigate = useNavigate();
 	function handleClick() {
-		navigate(-1);
+		navigate(destination);
 	}
 	return (
 		<button onClick={handleClick}>

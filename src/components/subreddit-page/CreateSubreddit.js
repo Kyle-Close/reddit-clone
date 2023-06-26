@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../header/Header';
 import BackButton from '../header/BackButton';
 
-import {subredditService} from '../../firebase';
+import { subredditService } from '../../firebase';
 import { useNavigate } from 'react-router';
 
 function CreateSubreddit() {
@@ -45,7 +45,7 @@ function CreateSubreddit() {
 	return (
 		<div className='flex flex-col h-screen bg-black'>
 			<Header justify='justify-between'>
-				<BackButton />
+				<BackButton destination={-1} />
 			</Header>
 			<div className='bg-zinc-700 grow mx-4 my-6 rounded-md text-gray-200'>
 				<form

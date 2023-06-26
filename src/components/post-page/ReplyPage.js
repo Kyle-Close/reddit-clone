@@ -65,7 +65,7 @@ function ReplyPage() {
 		originalComment && (
 			<div className='h-screen bg-black text-gray-100 flex flex-col'>
 				<Header gap='gap-12'>
-					<BackButton />
+					<BackButton destination={-1} />
 					<h3 className='font-semibold'>Add Reply</h3>
 					<div className='grow h-2/3 flex justify-end items-center mr-6 text-sm'>
 						<PostButton handleSubmit={handleSubmit} />
