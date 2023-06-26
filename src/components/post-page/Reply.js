@@ -18,12 +18,18 @@ function Reply({ replyData }) {
 	return (
 		userName && (
 			<div className='flex gap-2'>
-				<div className='w-6'>
-					<img src={CommentProfilePicture} />
+				<div className='w-6 flex-shrink-0'>
+					<img
+						src={CommentProfilePicture}
+						className='w-full h-auto'
+						alt='Profile'
+					/>
 				</div>
-				<div>
+				<div className='flex flex-col min-w-0'>
 					<p className='text-xs opacity-70'>{`u/${userName}`}</p>
-					<h1>{replyData.replyText}</h1>
+					<h1 className='whitespace-normal overflow-auto break-words'>
+						{replyData.replyText}
+					</h1>
 					<CommentVote />
 				</div>
 			</div>

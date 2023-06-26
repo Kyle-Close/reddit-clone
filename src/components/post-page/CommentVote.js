@@ -8,8 +8,6 @@ function CommentVote({ commentId }) {
 	const [numUpvotes, setNumUpvotes] = React.useState(0);
 	const [numDownvotes, setNumDownvotes] = React.useState(0);
 
-	console.log(commentId);
-
 	React.useEffect(() => {
 		console.log(`upvotes: ${numUpvotes} downvotes: ${numDownvotes}`);
 	}, [numUpvotes, numDownvotes]);
@@ -25,15 +23,16 @@ function CommentVote({ commentId }) {
 		if (commentId) fetchComment();
 	}, []);
 
-	return numUpvotes && numDownvotes ? (
+	return (
 		<div className='flex items-end gap-2'>
-			<CommentUpvoteButton numUpvotes={numUpvotes} />
-			<CommentDownvoteButton numDownvotes={numDownvotes} />
-		</div>
-	) : (
-		<div className='flex items-end gap-2'>
-			<CommentUpvoteButton numUpvotes={0} />
-			<CommentDownvoteButton numDownvotes={0} />
+			<CommentUpvoteButton
+				numUpvotes={numUpvotes}
+				setNumUpvotes={setNumUpvotes}
+			/>
+			<CommentDownvoteButton
+				numDownvotes={numDownvotes}
+				setNumDownvotes={setNumDownvotes}
+			/>
 		</div>
 	);
 }

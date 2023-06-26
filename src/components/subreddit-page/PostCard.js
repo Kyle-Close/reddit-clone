@@ -3,19 +3,23 @@ import { useNavigate } from 'react-router';
 
 import CommentButton from './CommentButton';
 import Vote from './Vote';
+import { commentService } from '../../firebase';
 
-function PostCard({
-	postId,
-	title,
-	numUpvotes,
-	numDownvotes,
-	numComments,
-	subredditName,
-}) {
+function PostCard({ postId, title, numUpvotes, numDownvotes, subredditName }) {
+	const [numComments, setNumComments] = React.useState(null);
 	const navigate = useNavigate();
+
 	function handleCardClick(e) {
 		navigate(`/r/${subredditName}/${postId}`);
 	}
+
+	React.useEffect(() => {
+		const fetchNumComments = async () => {
+			const commentList = await commentService.getCommentsFromPostId(postId);
+			setNumComments(commentList.length);
+		};
+		fetchNumComments();
+	}, []);
 
 	return (
 		<div

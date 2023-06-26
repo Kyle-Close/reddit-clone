@@ -7,7 +7,7 @@ import MenuModal from '../menu-modal/MenuModal';
 import SubredditPageHeader from './SubredditPageHeader';
 import PostCard from './PostCard';
 
-import { postService, subredditService } from '../../firebase';
+import { commentService, postService, subredditService } from '../../firebase';
 
 function Subreddit() {
 	const { subredditName } = useParams();
@@ -31,7 +31,7 @@ function Subreddit() {
 		createPostCards(postList);
 	}
 
-	function createPostCards(postList) {
+	async function createPostCards(postList) {
 		if (postList.length > 0) {
 			const cards = postList.map((postData, key) => {
 				return (
