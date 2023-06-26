@@ -6,10 +6,19 @@ import { commentService } from '../../firebase';
 
 function CommentUpvoteButton({ numUpvotes, setNumUpvotes, setNumDownvotes, commentId }) {
 	const authState = useSelector(state => state.authState)
+	const [isDisabled, setIsDisabled] = React.useState(false)
+
 	async function handleUpvoteClick() {
-		if(!authState || !authState.userId) return
+		setIsDisabled(true)
+		if(!authState || !authState.userId) {
+			setIsDisabled(false)
+			return
+		}
 		// Check if user already upvoted
-		if(await commentService.hasUserUpvotedComment(authState.userId, commentId)) return
+		if(await commentService.hasUserUpvotedComment(authState.userId, commentId))  {
+			setIsDisabled(false)
+			return
+		}
 		// Check if user already downvoted
 		if(await commentService.hasUserDownvotedComment(authState.userId, commentId)){
 			// Remove downvoteUser
@@ -25,10 +34,12 @@ function CommentUpvoteButton({ numUpvotes, setNumUpvotes, setNumDownvotes, comme
 		await commentService.incrementCommentUpvote(commentId)
 		// Add user to upvoteUsers in firebase
 		await commentService.addUserToUpvoteUsers(authState.userId, commentId)
+		setIsDisabled(false)
 	}
 
 	return (
 		<button
+			disabled={isDisabled}
 			onClick={handleUpvoteClick}
 			className='flex items-end'
 		>

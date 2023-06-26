@@ -6,11 +6,20 @@ import DownvotesIcon from '../../img/downvote-icon.png';
 
 function CommentDownvoteButton({ numDownvotes, setNumUpvotes, setNumDownvotes, commentId}) {
 	const authState = useSelector(state => state.authState)
+	const [isDisabled, setIsDisabled] = React.useState(false)
+
 
 	async function handleDownvoteClick() {
-		if(!authState || !authState.userId) return
+		setIsDisabled(true)
+		if(!authState || !authState.userId) {
+			setIsDisabled(false)
+			return
+		}
 		// Check if user already downvoted
-		if(await commentService.hasUserDownvotedComment(authState.userId, commentId)) return
+		if(await commentService.hasUserDownvotedComment(authState.userId, commentId)) {
+			setIsDisabled(false)
+			return
+		}
 		// Check if user already upvoted
 		if(await commentService.hasUserUpvotedComment(authState.userId, commentId)){
 			// Remove upvoteUser
@@ -25,10 +34,13 @@ function CommentDownvoteButton({ numDownvotes, setNumUpvotes, setNumDownvotes, c
 		// Increment downvote counter in firebase
 		await commentService.incrementCommentDownvote(commentId)
 		// Add user to downvoteUsers in firebase
-		await commentService.addUserToDownvoteUsers(authState.userId, commentId)	}
+		await commentService.addUserToDownvoteUsers(authState.userId, commentId)	
+		setIsDisabled(false)
+	}
 
 	return (
 		<button
+			disabled={isDisabled}
 			onClick={handleDownvoteClick}
 			className='flex items-end'
 		>
