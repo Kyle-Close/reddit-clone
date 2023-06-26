@@ -1,18 +1,29 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import UpvotesIcon from '../../img/upvote-icon.png';
+import { commentService } from '../../firebase';
 
-function CommentUpvoteButton({ numUpvotes, setNumUpvotes }) {
+function CommentUpvoteButton({ numUpvotes, setNumUpvotes, commentId }) {
+	const authState = useSelector(state => state.authState)
+	console.log(authState)
 	async function handleUpvoteClick() {
-		// Check if user already upvoted : if yes return
-
-		// Check if user already downvoted : if yes then remove downvote user and decrement downvotes in database
-
+		if(!authState || !authState.userId) return
+		// Check if user already upvoted
+		if(await commentService.hasUserUpvotedComment(authState.userId, commentId)) return
+		// Check if user already downvoted
+		if(await commentService.hasUserDownvotedComment(authState.userId, commentId)){
+			// Remove downvoteUser
+			await commentService.removeDownvoteUser(authState.userId, commentId)
+			// Decrement downvotes in firebase
+			await commentService.decrementCommentDownvote(commentId)
+		}
 		// Update the state to display new value locally
 		setNumUpvotes(numUpvotes + 1);
 		// Increment upvote counter in firebase
-
+		await commentService.incrementCommentUpvote(commentId)
 		// Add user to upvoteUsers in firebase
+		await commentService.addUserToUpvoteUsers(authState.userId, commentId)
 	}
 
 	return (

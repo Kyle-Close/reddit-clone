@@ -28,10 +28,12 @@ function CommentVote({ commentId }) {
 			<CommentUpvoteButton
 				numUpvotes={numUpvotes}
 				setNumUpvotes={setNumUpvotes}
+				commentId={commentId}
 			/>
 			<CommentDownvoteButton
 				numDownvotes={numDownvotes}
 				setNumDownvotes={setNumDownvotes}
+				commentId={commentId}
 			/>
 		</div>
 	);

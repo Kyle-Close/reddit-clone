@@ -71,6 +71,81 @@ const commentService = {
 			replies: arrayUnion(replyData),
 		});
 	},
+	async hasUserUpvotedComment(userId, commentId){
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+		const postSnapshot = await getDocs(commentIdQuery);
+		const docSnapshot = postSnapshot.docs[0];
+		const upvoteUsersList = docSnapshot.data().upvoteUsers;
+
+		if(upvoteUsersList.includes(userId)) return true
+		else return false
+	},
+	async hasUserDownvotedComment(userId, commentId){
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+		const postSnapshot = await getDocs(commentIdQuery);
+		const docSnapshot = postSnapshot.docs[0];
+		const downvoteUsersList = docSnapshot.data().downvoteUsers;
+		if(downvoteUsersList.includes(userId)) return true
+		else return false
+	},
+	async incrementCommentUpvote(commentId){
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+		const postSnapshot = await getDocs(commentIdQuery);
+		const docSnapshot = postSnapshot.docs[0];
+		const postRef = doc(db, 'comments', docSnapshot.id);
+
+		await updateDoc(postRef, {
+			upvotes: increment(1),
+		});
+	},
+	async addUserToUpvoteUsers(userId, commentId){
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+		const postSnapshot = await getDocs(commentIdQuery);
+		const docSnapshot = postSnapshot.docs[0];
+		const postRef = doc(db, 'comments', docSnapshot.id);
+
+		await updateDoc(postRef, {
+			upvoteUsers: arrayUnion(userId),
+		});
+	}, 
+	async removeDownvoteUser(userId, commentId){
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+		const postSnapshot = await getDocs(commentIdQuery);
+		const docSnapshot = postSnapshot.docs[0];
+		const postRef = doc(db, 'comments', docSnapshot.id);
+
+		await updateDoc(postRef, {
+			downvoteUsers: arrayRemove(userId),
+		});
+	}, 
+	async decrementCommentDownvote(commentId){
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+		const postSnapshot = await getDocs(commentIdQuery);
+		const docSnapshot = postSnapshot.docs[0];
+		const postRef = doc(db, 'comments', docSnapshot.id);
+
+		await updateDoc(postRef, {
+			downvotes: increment(-1),
+		});
+	}
 };
 
 export default commentService;
