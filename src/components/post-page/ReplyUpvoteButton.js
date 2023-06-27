@@ -4,7 +4,7 @@ import { commentService } from "../../firebase";
 
 import UpvoteIcon from '../../img/upvote-icon.png'
 
-function ReplyUpvoteButton({numUpvotes, setNumUpvotes, replyId, replyUpvoteUsers}){
+function ReplyUpvoteButton({numUpvotes, setNumUpvotes, setNumDownvotes, replyId, replyUpvoteUsers, replyDownvoteUsers, commentId}){
     const [isDisabled, setIsDisabled] = React.useState(false)
     const authState = useSelector(state => state.authState)
 
@@ -19,18 +19,16 @@ function ReplyUpvoteButton({numUpvotes, setNumUpvotes, replyId, replyUpvoteUsers
 			setIsDisabled(false)
 			return
 		}
-        console.log(authState.userId)
-        console.log(replyUpvoteUsers)
-/* 		// Check if user already downvoted
-		if(await commentService.hasUserDownvotedComment(authState.userId, commentId)){
+		// Check if user already downvoted
+		if(replyDownvoteUsers.includes(authState.userId)){
 			// Remove downvoteUser
-			await commentService.removeDownvoteUser(authState.userId, commentId)
+			await commentService.removeReplyDownvoteUser(authState.userId, commentId, replyId)
 			// Decrement downvotes in firebase
-			await commentService.decrementCommentDownvote(commentId)
+			await commentService.decrementReplyDownvote(commentId, replyId)
 			// Decrement downvote counter to display new value locally
 			setNumDownvotes(prev => prev - 1)
 		}
-		// Update the state to display new value locally
+/* 		// Update the state to display new value locally
 		setNumUpvotes(numUpvotes + 1);
 		// Increment upvote counter in firebase
 		await commentService.incrementCommentUpvote(commentId)

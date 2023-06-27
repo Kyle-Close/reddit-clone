@@ -33,11 +33,13 @@ function Comment() {
 	function buildCommentElements() {
 		if (!commentsList || commentsList.length < 1) return;
 		return commentsList.map((commentData, key) => {
+			console.log(commentData)
 			const replySection = commentData.replies.map((replyData, replyKey) => {
 				return (
 					<Reply
 						key={replyKey}
 						replyData={replyData}
+						commentId={commentData.commentId}
 					/>
 				);
 			});

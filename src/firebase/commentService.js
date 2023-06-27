@@ -198,19 +198,50 @@ const commentService = {
 			downvoteUsers: arrayUnion(userId),
 		});
 	},
-	async hasUserUpvotedReply(userId, commentId, replyId){
+	async removeReplyDownvoteUser(userId, commentId, replyId){
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+
+		const postSnapshot = await getDocs(commentIdQuery);
+		const docSnapshot = postSnapshot.docs[0];
+
+		const commentData = docSnapshot.data();
+		const repliesList = commentData.replies
+		const commentRef = doc(db, 'comments', docSnapshot.id);
+
+		
+		// Find reply from replyId
+		const replyIndex = repliesList.findIndex(reply => reply.replyId === replyId);
+		const replyDownvoteUsersList = repliesList[replyIndex].downvoteUsers
+
+		// Find userId in downvote list
+		const userIndex = replyDownvoteUsersList.findIndex(user => user === userId)
+		replyDownvoteUsersList.splice(userIndex, 1)
+		
+      // Update the comment document with the updated replies array
+      	await updateDoc(commentRef, { replies: repliesList });
+	},
+	async decrementReplyDownvote(commentId, replyId){
 		const commentIdQuery = query(
 			collection(db, 'comments'),
 			where('commentId', '==', commentId)
 		);
 		const postSnapshot = await getDocs(commentIdQuery);
 		const docSnapshot = postSnapshot.docs[0];
-		const repliesList = docSnapshot.data().replies;
-		const replyUpvoteUsersList = repliesList.upvoteUsers
-		console.log(replyUpvoteUsersList)
-/* 		if(downvoteUsersList.includes(userId)) return true
-		else return false */
-	},
+		const postRef = doc(db, 'comments', docSnapshot.id);
+
+		const commentData = docSnapshot.data();
+		const repliesList = commentData.replies
+		const commentRef = doc(db, 'comments', docSnapshot.id);
+
+		// Find reply from replyId
+		let replyIndex = repliesList.findIndex(reply => reply.replyId === replyId);
+		repliesList[replyIndex].downvotes = repliesList[replyIndex].downvotes - 1
+
+		await updateDoc(commentRef, { replies: repliesList });
+	}
 };
 
 export default commentService;

@@ -4,7 +4,7 @@ import CommentProfilePicture from '../../img/comment-profile-picture.png';
 import ReplyVote from './ReplyVote';
 import { userService } from '../../firebase';
 
-function Reply({ replyData }) {
+function Reply({ replyData, commentId }) {
 	const [userName, setUserName] = React.useState(null);
 
 	React.useEffect(() => {
@@ -30,7 +30,7 @@ function Reply({ replyData }) {
 					<h1 className='whitespace-normal overflow-auto break-words'>
 						{replyData.replyText}
 					</h1>
-					<ReplyVote replyData={replyData} />
+					<ReplyVote commentId={commentId} replyData={replyData} />
 				</div>
 			</div>
 		)
