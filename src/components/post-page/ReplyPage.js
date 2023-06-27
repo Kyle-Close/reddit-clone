@@ -54,9 +54,9 @@ function ReplyPage() {
 			replyText: replyText,
 			userId: authState.userId,
 			timestamp: Date.now(),
-			upvotes: [],
+			upvotes: 0,
 			upvoteUsers: [],
-			downvotes: [],
+			downvotes: 0,
 			downvoteUsers: [],
 		};
 	}

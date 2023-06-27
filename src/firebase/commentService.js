@@ -197,7 +197,20 @@ const commentService = {
 		await updateDoc(postRef, {
 			downvoteUsers: arrayUnion(userId),
 		});
-	}
+	},
+	async hasUserUpvotedReply(userId, commentId, replyId){
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+		const postSnapshot = await getDocs(commentIdQuery);
+		const docSnapshot = postSnapshot.docs[0];
+		const repliesList = docSnapshot.data().replies;
+		const replyUpvoteUsersList = repliesList.upvoteUsers
+		console.log(replyUpvoteUsersList)
+/* 		if(downvoteUsersList.includes(userId)) return true
+		else return false */
+	},
 };
 
 export default commentService;
