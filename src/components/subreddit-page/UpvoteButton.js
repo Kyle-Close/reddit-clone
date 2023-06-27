@@ -6,10 +6,15 @@ import {postService} from '../../firebase';
 
 function UpvoteButton({ numUpvotes, postId, setUpvotes, setDownvotes }) {
 	const authState = useSelector((state) => state.authState);
+	const [isDisabled, setIsDisabled] = React.useState(false)
 
 	async function handleUpvoteClick(e) {
+		setIsDisabled(true)
 		e.stopPropagation();
-		if (!authState || authState.userId === null ) return;
+		if (!authState || authState.userId === null ) {
+			setIsDisabled(false)
+			return
+		};
 		const upvoteResult = await postService.upvotePost(postId, authState.userId);
 		if (upvoteResult) {
 			// increment upvote state
@@ -19,9 +24,11 @@ function UpvoteButton({ numUpvotes, postId, setUpvotes, setDownvotes }) {
 				setDownvotes((prev) => prev - 1);
 			}
 		}
+		setIsDisabled(false)
 	}
 	return (
 		<button
+			disabled={isDisabled}
 			onClick={handleUpvoteClick}
 			className='flex items-end'
 		>

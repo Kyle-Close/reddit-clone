@@ -6,7 +6,6 @@ import Vote from '../subreddit-page/Vote';
 import CommentButton from '../subreddit-page/CommentButton';
 
 function PostMainContent({ postData }) {
-	console.log('yuer', postData);
 	const [userName, setUserName] = React.useState(null);
 	const [numComments, setNumComments] = React.useState(null);
 	const { subredditName } = useParams();
