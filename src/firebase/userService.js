@@ -49,6 +49,7 @@ const userService = {
 	},
 
 	async addSubredditToUserSubreddits(subredditId, userId) {
+		console.log(subredditId);
 		const userIdQuery = query(
 			collection(db, 'users'),
 			where('userId', '==', userId)

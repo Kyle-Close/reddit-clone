@@ -29,6 +29,7 @@ function CreateSubreddit() {
 		});
 
 		// Navigate user to their newly created subreddit
+		console.log('HERE', subredditName);
 		navigate(`/r/${subredditName}`);
 	}
 
@@ -55,7 +56,7 @@ function CreateSubreddit() {
 					<div className='grid gap-2'>
 						<label>Subreddit</label>
 						<input
-							maxLength={12}
+							maxLength={20}
 							onKeyDown={handleUserNameInputKeyDown}
 							onChange={handleFormChange}
 							className='bg-zinc-400 h-12 rounded-md px-3 text-white placeholder-gray-300'

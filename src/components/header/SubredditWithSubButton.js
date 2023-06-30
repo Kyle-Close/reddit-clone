@@ -36,6 +36,7 @@ function SubredditWithSubButton() {
 
 	async function fetchSubredditId() {
 		const subId = await subredditService.getSubredditId(subredditName);
+		console.log(subId);
 		setSubredditId(subId);
 		await isUserSubscribed(subId);
 	}
