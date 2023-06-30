@@ -71,7 +71,7 @@ const commentService = {
 			replies: arrayUnion(replyData),
 		});
 	},
-	async hasUserUpvotedComment(userId, commentId){
+	async hasUserUpvotedComment(userId, commentId) {
 		const commentIdQuery = query(
 			collection(db, 'comments'),
 			where('commentId', '==', commentId)
@@ -80,10 +80,10 @@ const commentService = {
 		const docSnapshot = postSnapshot.docs[0];
 		const upvoteUsersList = docSnapshot.data().upvoteUsers;
 
-		if(upvoteUsersList.includes(userId)) return true
-		else return false
+		if (upvoteUsersList.includes(userId)) return true;
+		else return false;
 	},
-	async hasUserDownvotedComment(userId, commentId){
+	async hasUserDownvotedComment(userId, commentId) {
 		const commentIdQuery = query(
 			collection(db, 'comments'),
 			where('commentId', '==', commentId)
@@ -91,10 +91,10 @@ const commentService = {
 		const postSnapshot = await getDocs(commentIdQuery);
 		const docSnapshot = postSnapshot.docs[0];
 		const downvoteUsersList = docSnapshot.data().downvoteUsers;
-		if(downvoteUsersList.includes(userId)) return true
-		else return false
+		if (downvoteUsersList.includes(userId)) return true;
+		else return false;
 	},
-	async incrementCommentUpvote(commentId){
+	async incrementCommentUpvote(commentId) {
 		const commentIdQuery = query(
 			collection(db, 'comments'),
 			where('commentId', '==', commentId)
@@ -107,7 +107,7 @@ const commentService = {
 			upvotes: increment(1),
 		});
 	},
-	async incrementCommentDownvote(commentId){
+	async incrementCommentDownvote(commentId) {
 		const commentIdQuery = query(
 			collection(db, 'comments'),
 			where('commentId', '==', commentId)
@@ -120,7 +120,7 @@ const commentService = {
 			downvotes: increment(1),
 		});
 	},
-	async addUserToUpvoteUsers(userId, commentId){
+	async addUserToUpvoteUsers(userId, commentId) {
 		const commentIdQuery = query(
 			collection(db, 'comments'),
 			where('commentId', '==', commentId)
@@ -132,8 +132,8 @@ const commentService = {
 		await updateDoc(postRef, {
 			upvoteUsers: arrayUnion(userId),
 		});
-	}, 
-	async removeDownvoteUser(userId, commentId){
+	},
+	async removeDownvoteUser(userId, commentId) {
 		const commentIdQuery = query(
 			collection(db, 'comments'),
 			where('commentId', '==', commentId)
@@ -145,8 +145,8 @@ const commentService = {
 		await updateDoc(postRef, {
 			downvoteUsers: arrayRemove(userId),
 		});
-	}, 
-	async decrementCommentDownvote(commentId){
+	},
+	async decrementCommentDownvote(commentId) {
 		const commentIdQuery = query(
 			collection(db, 'comments'),
 			where('commentId', '==', commentId)
@@ -159,7 +159,7 @@ const commentService = {
 			downvotes: increment(-1),
 		});
 	},
-	async removeUpvoteUser(userId, commentId){
+	async removeUpvoteUser(userId, commentId) {
 		const commentIdQuery = query(
 			collection(db, 'comments'),
 			where('commentId', '==', commentId)
@@ -172,7 +172,7 @@ const commentService = {
 			upvoteUsers: arrayRemove(userId),
 		});
 	},
-	async decrementCommentUpvote(commentId){
+	async decrementCommentUpvote(commentId) {
 		const commentIdQuery = query(
 			collection(db, 'comments'),
 			where('commentId', '==', commentId)
@@ -185,7 +185,7 @@ const commentService = {
 			upvotes: increment(-1),
 		});
 	},
-	async addUserToDownvoteUsers(userId, commentId){
+	async addUserToDownvoteUsers(userId, commentId) {
 		const commentIdQuery = query(
 			collection(db, 'comments'),
 			where('commentId', '==', commentId)
@@ -198,7 +198,7 @@ const commentService = {
 			downvoteUsers: arrayUnion(userId),
 		});
 	},
-	async removeReplyDownvoteUser(userId, commentId, replyId){
+	async removeReplyDownvoteUser(userId, commentId, replyId) {
 		const commentIdQuery = query(
 			collection(db, 'comments'),
 			where('commentId', '==', commentId)
@@ -208,40 +208,218 @@ const commentService = {
 		const docSnapshot = postSnapshot.docs[0];
 
 		const commentData = docSnapshot.data();
-		const repliesList = commentData.replies
+		const repliesList = commentData.replies;
 		const commentRef = doc(db, 'comments', docSnapshot.id);
 
-		
 		// Find reply from replyId
-		const replyIndex = repliesList.findIndex(reply => reply.replyId === replyId);
-		const replyDownvoteUsersList = repliesList[replyIndex].downvoteUsers
+		const replyIndex = repliesList.findIndex(
+			(reply) => reply.replyId === replyId
+		);
+		const replyDownvoteUsersList = repliesList[replyIndex].downvoteUsers;
 
 		// Find userId in downvote list
-		const userIndex = replyDownvoteUsersList.findIndex(user => user === userId)
-		replyDownvoteUsersList.splice(userIndex, 1)
-		
-      // Update the comment document with the updated replies array
-      	await updateDoc(commentRef, { replies: repliesList });
+		const userIndex = replyDownvoteUsersList.findIndex(
+			(user) => user === userId
+		);
+		replyDownvoteUsersList.splice(userIndex, 1);
+
+		// Update the comment document with the updated replies array
+		await updateDoc(commentRef, { replies: repliesList });
 	},
-	async decrementReplyDownvote(commentId, replyId){
+	async decrementReplyDownvote(commentId, replyId) {
 		const commentIdQuery = query(
 			collection(db, 'comments'),
 			where('commentId', '==', commentId)
 		);
 		const postSnapshot = await getDocs(commentIdQuery);
 		const docSnapshot = postSnapshot.docs[0];
-		const postRef = doc(db, 'comments', docSnapshot.id);
 
 		const commentData = docSnapshot.data();
-		const repliesList = commentData.replies
+		const repliesList = commentData.replies;
 		const commentRef = doc(db, 'comments', docSnapshot.id);
 
 		// Find reply from replyId
-		let replyIndex = repliesList.findIndex(reply => reply.replyId === replyId);
-		repliesList[replyIndex].downvotes = repliesList[replyIndex].downvotes - 1
+		let replyIndex = repliesList.findIndex(
+			(reply) => reply.replyId === replyId
+		);
+		repliesList[replyIndex].downvotes = repliesList[replyIndex].downvotes - 1;
 
 		await updateDoc(commentRef, { replies: repliesList });
-	}
+	},
+	async incrementReplyUpvote(commentId, replyId) {
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+		const postSnapshot = await getDocs(commentIdQuery);
+		const docSnapshot = postSnapshot.docs[0];
+
+		const commentData = docSnapshot.data();
+		const repliesList = commentData.replies;
+		const commentRef = doc(db, 'comments', docSnapshot.id);
+
+		// Find reply from replyId
+		let replyIndex = repliesList.findIndex(
+			(reply) => reply.replyId === replyId
+		);
+		repliesList[replyIndex].upvotes = repliesList[replyIndex].upvotes + 1;
+
+		await updateDoc(commentRef, { replies: repliesList });
+	},
+	async addUserToReplyUpvoteUsers(userId, commentId, replyId) {
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+		const postSnapshot = await getDocs(commentIdQuery);
+		const docSnapshot = postSnapshot.docs[0];
+
+		const commentData = docSnapshot.data();
+		const repliesList = commentData.replies;
+		const commentRef = doc(db, 'comments', docSnapshot.id);
+
+		// Find reply from replyId
+		let replyIndex = repliesList.findIndex(
+			(reply) => reply.replyId === replyId
+		);
+
+		repliesList[replyIndex].upvoteUsers = [
+			...repliesList[replyIndex].upvoteUsers,
+			userId,
+		];
+
+		await updateDoc(commentRef, { replies: repliesList });
+	},
+	async hasUserUpvotedReply(userId, commentId, replyId) {
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+		const postSnapshot = await getDocs(commentIdQuery);
+		const docSnapshot = postSnapshot.docs[0];
+
+		const commentData = docSnapshot.data();
+		const repliesList = commentData.replies;
+
+		// Find reply from replyId
+		let replyIndex = repliesList.findIndex(
+			(reply) => reply.replyId === replyId
+		);
+
+		if (repliesList[replyIndex].upvoteUsers.includes(userId)) return true;
+		else return false;
+	},
+	async hasUserDownvotedReply(userId, commentId, replyId) {
+		console.log('test');
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+		const postSnapshot = await getDocs(commentIdQuery);
+		const docSnapshot = postSnapshot.docs[0];
+
+		const commentData = docSnapshot.data();
+		const repliesList = commentData.replies;
+
+		// Find reply from replyId
+		let replyIndex = repliesList.findIndex(
+			(reply) => reply.replyId === replyId
+		);
+
+		if (repliesList[replyIndex].downvoteUsers.includes(userId)) return true;
+		else return false;
+	},
+	async removeReplyUpvoteUser(userId, commentId, replyId) {
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+
+		const postSnapshot = await getDocs(commentIdQuery);
+		const docSnapshot = postSnapshot.docs[0];
+
+		const commentData = docSnapshot.data();
+		const repliesList = commentData.replies;
+		const commentRef = doc(db, 'comments', docSnapshot.id);
+
+		// Find reply from replyId
+		const replyIndex = repliesList.findIndex(
+			(reply) => reply.replyId === replyId
+		);
+		const replyUpvoteUsersList = repliesList[replyIndex].upvoteUsers;
+
+		// Find userId in downvote list
+		const userIndex = replyUpvoteUsersList.findIndex((user) => user === userId);
+		replyUpvoteUsersList.splice(userIndex, 1);
+
+		// Update the comment document with the updated replies array
+		await updateDoc(commentRef, { replies: repliesList });
+	},
+	async decrementReplyUpvote(commentId, replyId) {
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+		const postSnapshot = await getDocs(commentIdQuery);
+		const docSnapshot = postSnapshot.docs[0];
+
+		const commentData = docSnapshot.data();
+		const repliesList = commentData.replies;
+		const commentRef = doc(db, 'comments', docSnapshot.id);
+
+		// Find reply from replyId
+		let replyIndex = repliesList.findIndex(
+			(reply) => reply.replyId === replyId
+		);
+
+		repliesList[replyIndex].upvotes = repliesList[replyIndex].upvotes - 1;
+
+		await updateDoc(commentRef, { replies: repliesList });
+	},
+	async incrementReplyDownvote(commentId, replyId) {
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+		const postSnapshot = await getDocs(commentIdQuery);
+		const docSnapshot = postSnapshot.docs[0];
+
+		const commentData = docSnapshot.data();
+		const repliesList = commentData.replies;
+		const commentRef = doc(db, 'comments', docSnapshot.id);
+
+		// Find reply from replyId
+		let replyIndex = repliesList.findIndex(
+			(reply) => reply.replyId === replyId
+		);
+		repliesList[replyIndex].downvotes = repliesList[replyIndex].downvotes + 1;
+
+		await updateDoc(commentRef, { replies: repliesList });
+	},
+	async addUserToReplyDownvoteUsers(userId, commentId, replyId) {
+		const commentIdQuery = query(
+			collection(db, 'comments'),
+			where('commentId', '==', commentId)
+		);
+		const postSnapshot = await getDocs(commentIdQuery);
+		const docSnapshot = postSnapshot.docs[0];
+
+		const commentData = docSnapshot.data();
+		const repliesList = commentData.replies;
+		const commentRef = doc(db, 'comments', docSnapshot.id);
+
+		// Find reply from replyId
+		let replyIndex = repliesList.findIndex(
+			(reply) => reply.replyId === replyId
+		);
+
+		repliesList[replyIndex].downvoteUsers = [
+			...repliesList[replyIndex].downvoteUsers,
+			userId,
+		];
+
+		await updateDoc(commentRef, { replies: repliesList });
+	},
 };
 
 export default commentService;

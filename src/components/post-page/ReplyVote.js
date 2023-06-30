@@ -1,24 +1,30 @@
-import React from "react";
+import React from 'react';
 
-import ReplyUpvoteButton from "./ReplyUpvoteButton";
+import ReplyUpvoteButton from './ReplyUpvoteButton';
+import ReplyDownvoteButton from './ReplyDownvoteButton';
 
-function ReplyVote({replyData, commentId}){
-    const [numUpvotes, setNumUpvotes] = React.useState(replyData.upvotes)
-    const [numDownvotes, setNumDownvotes] = React.useState(replyData.downvotes)
+function ReplyVote({ replyData, commentId }) {
+	const [numUpvotes, setNumUpvotes] = React.useState(replyData.upvotes);
+	const [numDownvotes, setNumDownvotes] = React.useState(replyData.downvotes);
 
-    return (
-        <>
-            <ReplyUpvoteButton
-                numUpvotes={numUpvotes}
-                setNumUpvotes={setNumUpvotes}
-                setNumDownvotes={setNumDownvotes}
-                replyId={replyData.replyId}
-                replyUpvoteUsers={replyData.upvoteUsers}
-                replyDownvoteUsers={replyData.downvoteUsers}
-                commentId={commentId}
-            />
-        </>
-    )
+	return (
+		<div className='flex gap-2'>
+			<ReplyUpvoteButton
+				numUpvotes={numUpvotes}
+				setNumUpvotes={setNumUpvotes}
+				setNumDownvotes={setNumDownvotes}
+				replyId={replyData.replyId}
+				commentId={commentId}
+			/>
+			<ReplyDownvoteButton
+				numDownvotes={numDownvotes}
+				setNumUpvotes={setNumUpvotes}
+				setNumDownvotes={setNumDownvotes}
+				replyId={replyData.replyId}
+				commentId={commentId}
+			/>
+		</div>
+	);
 }
 
-export default ReplyVote
+export default ReplyVote;
