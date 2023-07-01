@@ -7,12 +7,13 @@ import MenuModal from '../menu-modal/MenuModal';
 import SubredditPageHeader from './SubredditPageHeader';
 import PostCard from './PostCard';
 
-import { commentService, postService, subredditService } from '../../firebase';
+import { postService, subredditService } from '../../firebase';
 
 function Subreddit() {
 	const { subredditName } = useParams();
 	const modal = useSelector((state) => state.modal);
 	const [postCards, setPostCards] = React.useState(null);
+	const [isSubredditValid, setIsSubredditValid] = React.useState(null);
 
 	function renderModal() {
 		switch (modal.type) {
@@ -52,10 +53,28 @@ function Subreddit() {
 	}
 
 	React.useEffect(() => {
+		const isSubredditValid = async () => {
+			// Check if subreddit exists
+			const allSubredditNames = await subredditService.getSubredditNames();
+			let isFound = false;
+			allSubredditNames.forEach((name) => {
+				if (name.toUpperCase() === subredditName.toUpperCase()) {
+					isFound = true;
+				}
+			});
+			return isFound;
+		};
+
+		// Create an async function and call it immediately
+		(async () => {
+			const isValid = await isSubredditValid();
+			if (!isValid) setIsSubredditValid(false);
+			else setIsSubredditValid(true);
+		})();
 		getPostList();
 	}, [subredditName]);
 
-	return (
+	return isSubredditValid ? (
 		<div className='bg-black h-screen max-h-screen overflow-y-scroll'>
 			<SubredditPageHeader subredditName={subredditName} />
 			{postCards && postCards}
@@ -69,6 +88,12 @@ function Subreddit() {
 				</h1>
 			)}
 			{modal.isOpen && renderModal()}
+		</div>
+	) : (
+		<div className='flex h-screen w-screen items-center justify-center bg-black'>
+			<div className='text-red-500 text-lg font-semibold'>
+				Subreddit does not exist
+			</div>
 		</div>
 	);
 }
